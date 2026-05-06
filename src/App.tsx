@@ -1,105 +1,32 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Zap, Layers, Cpu, Shield, Download, Mail, Check, FileText, Headphones, BookOpen, CreditCard, Coins, ArrowLeft } from 'lucide-react';
-import { ChatWidget } from './ChatWidget';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  ArrowRight, Zap, Layers, Cpu, Shield, Download, Mail, Check, 
+  FileText, Headphones, BookOpen, Coins, ArrowLeft, Sparkles,
+  Workflow, Terminal, Box
+} from 'lucide-react';
+import { ChatWidget } from './components/ChatWidget';
+import { NodeDemo } from './components/NodeDemo';
+import { Pricing } from './components/Pricing';
 
 function App() {
   const [showBilling, setShowBilling] = useState(false);
 
   if (showBilling) {
     return (
-      <div className="min-h-screen bg-anarchy-dark p-6">
-        <div className="max-w-3xl mx-auto pt-20">
-          <button onClick={() => setShowBilling(false)} className="flex items-center gap-2 text-gray-400 hover:text-white mb-8">
+      <div className="min-h-screen bg-anarchy-dark p-6 noise-overlay">
+        <div className="max-w-4xl mx-auto pt-20">
+          <motion.button 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            onClick={() => setShowBilling(false)} 
+            className="flex items-center gap-2 text-gray-400 hover:text-white mb-8 glass px-4 py-2 rounded-full"
+          >
             <ArrowLeft size={20} />
             Back to Home
-          </button>
+          </motion.button>
 
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-white mb-2">Billing</h1>
-            <p className="text-gray-400">Add credits to your account</p>
-          </div>
-
-          {/* Current Balance */}
-          <div className="bg-anarchy-gray border border-white/10 rounded-2xl p-6 mb-6">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-lg bg-anarchy-red/10 flex items-center justify-center">
-                <Coins size={28} className="text-anarchy-red" />
-              </div>
-              <div>
-                <div className="text-gray-400 text-sm">Available Credits</div>
-                <div className="text-3xl font-bold text-white">0 Credits</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Credit Packages */}
-          <div className="bg-anarchy-gray border border-white/10 rounded-2xl p-6 mb-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Credit Amount</h3>
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-              {[
-                { amount: 5, credits: 525 },
-                { amount: 10, credits: 1050 },
-                { amount: 20, credits: 2150 },
-                { amount: 50, credits: 5500 },
-                { amount: 100, credits: 11500 },
-                { amount: 1000, credits: 125000 },
-              ].map((pkg, index) => (
-                <button key={index} className="bg-anarchy-dark border border-white/10 rounded-lg p-4 hover:border-anarchy-red/30 transition-colors">
-                  <div className="text-xl font-bold text-white">${pkg.amount}</div>
-                  <div className="text-gray-400 text-xs">{pkg.credits.toLocaleString()}</div>
-                </button>
-              ))}
-              <button className="bg-anarchy-dark border border-white/10 rounded-lg p-4 hover:border-anarchy-red/30 transition-colors">
-                <div className="text-xl font-bold text-white">Custom</div>
-              </button>
-            </div>
-          </div>
-
-          {/* Generation Costs */}
-          <div className="bg-anarchy-gray border border-white/10 rounded-2xl p-6 mb-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Generation Costs (Credits)</h3>
-            <div className="space-y-3">
-              {[
-                { name: 'Standard (flux-schnell)', cost: 3 },
-                { name: 'HD (flux-dev)', cost: 25 },
-                { name: '4K (flux-1.1-pro)', cost: 40 },
-                { name: 'Premium (ideogram-v3)', cost: 90 },
-                { name: 'Video 480p (per sec)', cost: 90 },
-                { name: 'Video 720p (per sec)', cost: 250 },
-                { name: 'Upscale', cost: 5 },
-              ].map((item, index) => (
-                <div key={index} className="flex justify-between items-center bg-anarchy-dark rounded-lg p-3">
-                  <span className="text-gray-300">{item.name}</span>
-                  <span className="text-white font-semibold">{item.cost} Credits</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Payment Method */}
-          <div className="bg-anarchy-gray border border-white/10 rounded-2xl p-6 mb-6">
-            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-              <CreditCard size={20} />
-              Payment Method
-            </h3>
-            <div className="bg-anarchy-dark rounded-lg p-4">
-              <div className="flex items-center gap-4 text-gray-400">
-                <span>Credit Card</span>
-                <span>•</span>
-                <span>PayPal</span>
-                <span>•</span>
-                <span>Bank Transfer</span>
-              </div>
-              <p className="text-gray-500 text-sm mt-2">Secure payments powered by Stripe</p>
-            </div>
-          </div>
-
-          <button className="w-full bg-anarchy-red text-white py-4 rounded-xl font-semibold hover:bg-red-600 transition-colors">
-            Purchase Credits
-          </button>
-
-          <p className="text-gray-500 text-sm mt-4 text-center">Credits expire after 1 year from purchase date</p>
+          <Pricing />
         </div>
 
         <ChatWidget />
@@ -108,177 +35,454 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-anarchy-dark">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-anarchy-dark/80 backdrop-blur-xl border-b border-white/5">
+    <div className="min-h-screen bg-anarchy-dark noise-overlay overflow-x-hidden">
+      {/* Navigation */}
+      <motion.nav 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5"
+      >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="text-2xl font-bold text-white">
+          <motion.div 
+            className="text-2xl font-bold text-white flex items-center gap-2"
+            whileHover={{ scale: 1.02 }}
+          >
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-anarchy-red to-red-600 flex items-center justify-center">
+              <Zap size={20} className="text-white" />
+            </div>
             Anarchy<span className="text-anarchy-red">AI</span>
-          </div>
-          <div className="flex items-center gap-8">
-            <a href="#features" className="text-gray-400 hover:text-white transition-colors text-sm">Features</a>
-            <a href="#philosophy" className="text-gray-400 hover:text-white transition-colors text-sm">Philosophy</a>
-            <a href="#pricing" className="text-gray-400 hover:text-white transition-colors text-sm">Pricing</a>
-            <a href="#download" className="bg-anarchy-red text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition-colors">
+          </motion.div>
+          <div className="hidden md:flex items-center gap-8">
+            {['Features', 'Demo', 'Philosophy', 'Pricing'].map((item) => (
+              <motion.a 
+                key={item}
+                href={`#${item.toLowerCase()}`} 
+                className="text-gray-400 hover:text-white transition-colors text-sm relative group"
+                whileHover={{ y: -2 }}
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-anarchy-red transition-all group-hover:w-full" />
+              </motion.a>
+            ))}
+            <motion.a 
+              href="#download" 
+              className="bg-gradient-to-r from-anarchy-red to-red-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:shadow-[0_0_20px_rgba(225,29,72,0.4)] transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Download
-            </a>
+            </motion.a>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
-      <section className="min-h-screen flex items-center justify-center pt-20 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-              Node-based AI Automation<br />
-              <span className="text-anarchy-red">for Architecture</span>
+      {/* Hero Section */}
+      <section className="min-h-screen flex items-center justify-center pt-20 px-6 relative">
+        {/* Animated Background */}
+        <div className="absolute inset-0 gradient-hero" />
+        <div className="absolute inset-0 grid-pattern opacity-20" />
+        
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
+          >
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-sm mb-8"
+            >
+              <Sparkles size={16} />
+              AI-Powered Architecture Workflow
+            </motion.span>
+            
+            <h1 className="text-display text-white mb-6">
+              Node-based AI Automation
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-anarchy-red via-red-400 to-anarchy-red animate-gradient">
+                for Architecture
+              </span>
             </h1>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
-              Build intelligent workflows with visual nodes. Automate your architectural design process with AI.
+            
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+              Build intelligent workflows with visual nodes. Automate your architectural design process with state-of-the-art AI.
             </p>
-            <div className="flex items-center justify-center gap-4">
-              <a href="#download" className="bg-anarchy-red text-white px-8 py-3 rounded-lg font-medium hover:bg-red-600 transition-colors flex items-center gap-2">
-                Get Started <ArrowRight size={18} />
-              </a>
-              <a href="#features" className="border border-white/20 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/5 transition-colors">
-                Learn More
-              </a>
+            
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+              <motion.a 
+                href="#download" 
+                className="bg-gradient-to-r from-anarchy-red to-red-600 text-white px-8 py-4 rounded-xl font-medium hover:shadow-[0_0_40px_rgba(225,29,72,0.4)] transition-all flex items-center gap-2 group"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get Started 
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </motion.a>
+              <motion.a 
+                href="#demo" 
+                className="glass text-white px-8 py-4 rounded-xl font-medium hover:bg-white/10 transition-all flex items-center gap-2 border border-white/10"
+                whileHover={{ scale: 1.02 }}
+              >
+                <Terminal size={18} />
+                See Demo
+              </motion.a>
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="mt-16">
-            <div className="bg-anarchy-gray border border-white/10 rounded-2xl p-4 max-w-5xl mx-auto">
-              <div className="bg-anarchy-dark rounded-xl aspect-video flex items-center justify-center border border-white/5 overflow-hidden">
+          {/* Hero Visual */}
+          <motion.div 
+            initial={{ opacity: 0, y: 60, scale: 0.95 }} 
+            animate={{ opacity: 1, y: 0, scale: 1 }} 
+            transition={{ duration: 1, delay: 0.4, ease: [0.23, 1, 0.32, 1] }} 
+            className="mt-20 relative"
+          >
+            <div className="absolute -inset-4 bg-gradient-to-r from-anarchy-red/20 via-purple-500/20 to-blue-500/20 rounded-3xl blur-3xl" />
+            <div className="glass rounded-3xl p-3 relative">
+              <div className="bg-anarchy-dark rounded-2xl aspect-video overflow-hidden border border-white/5">
                 <img 
                   src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=675&fit=crop" 
-                  alt="Dashboard" 
-                  className="w-full h-full object-cover opacity-80"
+                  alt="Anarchy AI Dashboard" 
+                  className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
                 />
+                {/* Overlay UI Elements */}
+                <div className="absolute inset-0 bg-gradient-to-t from-anarchy-dark/60 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="flex -space-x-2">
+                      {['flux-schnell', 'flux-dev', 'ideogram'].map((model, i) => (
+                        <div key={i} className="w-10 h-10 rounded-full bg-anarchy-gray border-2 border-anarchy-dark flex items-center justify-center text-xs font-medium text-gray-400">
+                          {model.slice(0, 2).toUpperCase()}
+                        </div>
+                      ))}
+                    </div>
+                    <span className="text-sm text-gray-400">AI Models Ready</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-anarchy-red">
+                    <div className="w-2 h-2 rounded-full bg-anarchy-red animate-pulse" />
+                    <span className="text-sm">Live Processing</span>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      <section id="features" className="py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Powerful Features</h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">Everything you need to automate your architectural workflow</p>
+      {/* Features Section */}
+      <section id="features" className="py-32 px-6 relative">
+        <div className="absolute inset-0 gradient-mesh opacity-30" />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true }} 
+            transition={{ duration: 0.8 }}
+            className="text-center mb-20"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-sm mb-6">
+              <Layers size={16} />
+              Core Capabilities
+            </span>
+            <h2 className="text-headline text-white mb-6">Powerful Features</h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Everything you need to automate your architectural workflow with AI
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: Zap, title: 'Visual Node Editor', description: 'Build complex workflows with an intuitive drag-and-drop interface.' },
-              { icon: Layers, title: 'Multi-Stage Processing', description: 'Chain multiple AI operations together for complete automation.' },
-              { icon: Cpu, title: 'AI-Powered Generation', description: 'Leverage state-of-the-art AI models for image generation.' },
-              { icon: Shield, title: 'Secure & Private', description: 'Your data stays yours with local processing options.' },
-              { icon: Download, title: 'Batch Processing', description: 'Process multiple images simultaneously to save time.' },
-              { icon: Mail, title: 'Collaboration Ready', description: 'Share workflows with your team seamlessly.' }
+              { icon: Zap, title: 'Visual Node Editor', description: 'Build complex workflows with an intuitive drag-and-drop interface. Connect nodes to create powerful automation chains.', gradient: 'from-yellow-500/20 to-orange-500/20' },
+              { icon: Layers, title: 'Multi-Stage Processing', description: 'Chain multiple AI operations together for complete automation. From sketch to final render in one workflow.', gradient: 'from-blue-500/20 to-cyan-500/20' },
+              { icon: Cpu, title: 'AI-Powered Generation', description: 'Leverage state-of-the-art AI models including FLUX, Ideogram, and custom trained models for your projects.', gradient: 'from-purple-500/20 to-pink-500/20' },
+              { icon: Shield, title: 'Secure & Private', description: 'Your data stays yours with local processing options and encrypted cloud storage for sensitive projects.', gradient: 'from-green-500/20 to-emerald-500/20' },
+              { icon: Download, title: 'Batch Processing', description: 'Process multiple images simultaneously to save time. Perfect for large architectural portfolios and variations.', gradient: 'from-red-500/20 to-rose-500/20' },
+              { icon: Workflow, title: 'Collaboration Ready', description: 'Share workflows with your team seamlessly. Version control and team workspaces for professional use.', gradient: 'from-indigo-500/20 to-violet-500/20' }
             ].map((feature, index) => (
-              <motion.div key={index} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: index * 0.1 }} className="bg-anarchy-gray border border-white/10 rounded-2xl p-8 hover:border-anarchy-red/30 transition-colors">
-                <div className="w-12 h-12 rounded-lg bg-anarchy-red/10 flex items-center justify-center mb-6">
-                  <feature.icon size={24} className="text-anarchy-red" />
+              <motion.div 
+                key={index} 
+                initial={{ opacity: 0, y: 30 }} 
+                whileInView={{ opacity: 1, y: 0 }} 
+                viewport={{ once: true }} 
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="group glass-card rounded-2xl p-8 hover:border-anarchy-red/30 transition-all duration-300 cursor-pointer"
+              >
+                <div className={`
+                  w-14 h-14 rounded-xl bg-gradient-to-br ${feature.gradient}
+                  flex items-center justify-center mb-6 group-hover:scale-110 transition-transform
+                `}>
+                  <feature.icon size={28} className="text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
+                <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-anarchy-red transition-colors">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-400 leading-relaxed">
+                  {feature.description}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="philosophy" className="py-32 px-6 bg-gradient-to-b from-anarchy-dark to-anarchy-gray">
-        <div className="max-w-7xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">The Master Builder Philosophy</h2>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto">Merging design and execution into a seamless creative process</p>
+      {/* Node Demo Section */}
+      <NodeDemo />
+
+      {/* Philosophy Section */}
+      <section id="philosophy" className="py-32 px-6 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-anarchy-dark via-anarchy-gray to-anarchy-dark" />
+        <div className="absolute inset-0 grid-pattern opacity-10" />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true }} 
+            transition={{ duration: 0.8 }}
+            className="text-center mb-20"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-sm mb-6">
+              <Box size={16} />
+              Our Vision
+            </span>
+            <h2 className="text-headline text-white mb-6">The Master Builder Philosophy</h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Merging design and execution into a seamless creative process
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h3 className="text-2xl font-semibold text-white mb-6">Design Meets Execution</h3>
-              <p className="text-gray-400 mb-6">Traditional architectural tools separate design from execution. Anarchy AI bridges this gap.</p>
-              <ul className="space-y-4">
-                {['Visual workflow design', 'Real-time AI processing', 'Iterative refinement', 'Seamless integration'].map((item, index) => (
-                  <li key={index} className="flex items-center gap-3 text-gray-300">
-                    <Check size={18} className="text-anarchy-red" />
-                    {item}
-                  </li>
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -40 }} 
+              whileInView={{ opacity: 1, x: 0 }} 
+              viewport={{ once: true }} 
+              transition={{ duration: 0.8 }}
+              className="space-y-8"
+            >
+              <div>
+                <h3 className="text-2xl font-semibold text-white mb-4">Design Meets Execution</h3>
+                <p className="text-gray-400 text-lg leading-relaxed">
+                  Traditional architectural tools separate design from execution. Anarchy AI bridges this gap with an integrated workflow that transforms ideas into reality.
+                </p>
+              </div>
+              
+              <div className="space-y-4">
+                {[
+                  { title: 'Visual Workflow Design', desc: 'Intuitive node-based interface' },
+                  { title: 'Real-time AI Processing', desc: 'Instant feedback and iteration' },
+                  { title: 'Iterative Refinement', desc: 'Continuous improvement cycles' },
+                  { title: 'Seamless Integration', desc: 'Works with your existing tools' }
+                ].map((item, index) => (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="flex items-start gap-4 group"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-anarchy-red/10 flex items-center justify-center flex-shrink-0 group-hover:bg-anarchy-red/20 transition-colors">
+                      <Check size={16} className="text-anarchy-red" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-white">{item.title}</div>
+                      <div className="text-sm text-gray-500">{item.desc}</div>
+                    </div>
+                  </motion.div>
                 ))}
-              </ul>
+              </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="bg-anarchy-dark border border-white/10 rounded-2xl p-8 overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=400&fit=crop" 
-                alt="Architecture Workflow" 
-                className="w-full h-full object-cover rounded-xl opacity-70"
-              />
+            <motion.div 
+              initial={{ opacity: 0, x: 40 }} 
+              whileInView={{ opacity: 1, x: 0 }} 
+              viewport={{ once: true }} 
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="absolute -inset-4 bg-gradient-to-r from-anarchy-red/20 to-purple-500/20 rounded-3xl blur-2xl" />
+              <div className="glass rounded-3xl p-4 relative">
+                <div className="relative rounded-2xl overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop" 
+                    alt="Architecture Workflow" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-anarchy-dark via-transparent to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <div className="glass rounded-xl p-4">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-full bg-anarchy-red/20 flex items-center justify-center">
+                          <Zap size={20} className="text-anarchy-red" />
+                        </div>
+                        <div>
+                          <div className="text-white font-medium">Workflow Active</div>
+                          <div className="text-sm text-gray-400">Processing 4 nodes simultaneously</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      <section id="pricing" className="py-32 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Pay As You Go</h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
-              No monthly subscriptions. Pay only for what you use. Purchase credits and use them whenever you need.
-            </p>
-            <div className="flex items-center justify-center gap-4">
-              <button onClick={() => setShowBilling(true)} className="bg-anarchy-red text-white px-8 py-4 rounded-lg font-medium hover:bg-red-600 transition-colors flex items-center gap-2">
-                <Coins size={20} />
-                Purchase Credits
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Pricing Section */}
+      <Pricing />
 
-      <section id="download" className="py-32 px-6 bg-gradient-to-b from-anarchy-gray to-anarchy-dark">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Ready to Get Started?</h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8">Download Anarchy AI and transform your architectural workflow today.</p>
-            <div className="flex items-center justify-center gap-4">
-              <button className="bg-anarchy-red text-white px-8 py-4 rounded-lg font-medium hover:bg-red-600 transition-colors flex items-center gap-2">
+      {/* Download Section */}
+      <section id="download" className="py-32 px-6 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-anarchy-gray via-anarchy-dark to-anarchy-dark" />
+        <div className="absolute inset-0 gradient-mesh opacity-50" />
+        
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true }} 
+            transition={{ duration: 0.8 }}
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-sm mb-6">
+              <Download size={16} />
+              Free Download
+            </span>
+            <h2 className="text-headline text-white mb-6">Ready to Get Started?</h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-10">
+              Download Anarchy AI and transform your architectural workflow today. Free to start, pay-as-you-go for AI generation.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <motion.button 
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-anarchy-red to-red-600 text-white px-10 py-4 rounded-xl font-medium hover:shadow-[0_0_40px_rgba(225,29,72,0.4)] transition-all flex items-center gap-2 group"
+              >
                 <Download size={20} />
                 Download for Windows
+                <span className="text-white/60 text-sm">v2.1.0</span>
+              </motion.button>
+              <button className="glass text-white px-8 py-4 rounded-xl font-medium hover:bg-white/10 transition-all border border-white/10">
+                System Requirements
               </button>
+            </div>
+            <div className="mt-8 flex items-center justify-center gap-6 text-sm text-gray-500">
+              <span className="flex items-center gap-2">
+                <Check size={14} className="text-anarchy-red" />
+                Windows 10/11
+              </span>
+              <span className="flex items-center gap-2">
+                <Check size={14} className="text-anarchy-red" />
+                8GB RAM minimum
+              </span>
+              <span className="flex items-center gap-2">
+                <Check size={14} className="text-anarchy-red" />
+                GPU Recommended
+              </span>
             </div>
           </motion.div>
         </div>
       </section>
 
-      <section id="support" className="py-32 px-6 bg-gradient-to-b from-anarchy-dark to-anarchy-gray">
-        <div className="max-w-7xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Support & Resources</h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">Everything you need to master Anarchy AI</p>
+      {/* Support Section */}
+      <section id="support" className="py-32 px-6 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-anarchy-dark to-anarchy-gray" />
+        <div className="absolute inset-0 grid-pattern opacity-5" />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true }} 
+            transition={{ duration: 0.8 }}
+            className="text-center mb-20"
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-sm mb-6">
+              <Headphones size={16} />
+              We're Here to Help
+            </span>
+            <h2 className="text-headline text-white mb-6">Support & Resources</h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Everything you need to master Anarchy AI
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: Headphones, title: '24/7 Support', description: 'Get help whenever you need it with our dedicated support team.' },
-              { icon: BookOpen, title: 'Documentation', description: 'Comprehensive guides and tutorials to help you get started.' },
-              { icon: FileText, title: 'Blueprints', description: 'Professional workflow templates created by experts.' }
+              { icon: Headphones, title: '24/7 Support', description: 'Get help whenever you need it with our dedicated support team. Response within hours.', gradient: 'from-blue-500/20 to-cyan-500/20' },
+              { icon: BookOpen, title: 'Documentation', description: 'Comprehensive guides and tutorials. From basics to advanced workflow design.', gradient: 'from-green-500/20 to-emerald-500/20' },
+              { icon: FileText, title: 'Blueprints', description: 'Professional workflow templates created by experts. Import and customize instantly.', gradient: 'from-purple-500/20 to-pink-500/20' }
             ].map((item, index) => (
-              <motion.div key={index} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: index * 0.1 }} className="bg-anarchy-dark border border-white/10 rounded-2xl p-8 hover:border-anarchy-red/30 transition-colors">
-                <div className="w-12 h-12 rounded-lg bg-anarchy-red/10 flex items-center justify-center mb-6">
-                  <item.icon size={24} className="text-anarchy-red" />
+              <motion.div 
+                key={index} 
+                initial={{ opacity: 0, y: 30 }} 
+                whileInView={{ opacity: 1, y: 0 }} 
+                viewport={{ once: true }} 
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="glass-card rounded-2xl p-8 hover:border-anarchy-red/30 transition-all group cursor-pointer"
+              >
+                <div className={`
+                  w-14 h-14 rounded-xl bg-gradient-to-br ${item.gradient}
+                  flex items-center justify-center mb-6 group-hover:scale-110 transition-transform
+                `}>
+                  <item.icon size={28} className="text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">{item.title}</h3>
-                <p className="text-gray-400">{item.description}</p>
+                <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-anarchy-red transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-gray-400 leading-relaxed">
+                  {item.description}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      <footer className="py-12 px-6 border-t border-white/5">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-gray-500 text-sm">© 2026 Anarchy AI. All rights reserved.</p>
+      {/* Footer */}
+      <footer className="py-16 px-6 border-t border-white/5 bg-anarchy-dark">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8 mb-12">
+            <div className="col-span-2">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-anarchy-red to-red-600 flex items-center justify-center">
+                  <Zap size={18} className="text-white" />
+                </div>
+                <span className="text-xl font-bold text-white">Anarchy<span className="text-anarchy-red">AI</span></span>
+              </div>
+              <p className="text-gray-500 max-w-sm">
+                Node-based AI automation for architecture. Transform your design workflow with intelligent AI tools.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-4">Product</h4>
+              <ul className="space-y-2 text-gray-500">
+                <li><a href="#features" className="hover:text-anarchy-red transition-colors">Features</a></li>
+                <li><a href="#pricing" className="hover:text-anarchy-red transition-colors">Pricing</a></li>
+                <li><a href="#download" className="hover:text-anarchy-red transition-colors">Download</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-4">Support</h4>
+              <ul className="space-y-2 text-gray-500">
+                <li><a href="#support" className="hover:text-anarchy-red transition-colors">Documentation</a></li>
+                <li><a href="#" className="hover:text-anarchy-red transition-colors">Contact</a></li>
+                <li><a href="#" className="hover:text-anarchy-red transition-colors">Status</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-gray-600 text-sm">
+              © 2026 Anarchy AI. All rights reserved.
+            </p>
+            <div className="flex items-center gap-6 text-sm text-gray-600">
+              <a href="#" className="hover:text-gray-400 transition-colors">Privacy</a>
+              <a href="#" className="hover:text-gray-400 transition-colors">Terms</a>
+            </div>
+          </div>
         </div>
       </footer>
 
