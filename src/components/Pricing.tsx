@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Coins, CreditCard, Wallet, Globe, Check, 
-  Zap, Building2, Landmark, ArrowRight, Shield,
-  Sparkles, Cpu, Layers
+  Landmark, ArrowRight, Shield,
+  Sparkles
 } from 'lucide-react';
 
 interface CreditPackage {

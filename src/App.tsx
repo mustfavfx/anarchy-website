@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
-  ArrowRight, Zap, Layers, Cpu, Shield, Download, Mail, Check, 
-  FileText, Headphones, BookOpen, Coins, ArrowLeft, Sparkles,
+  ArrowRight, Zap, Layers, Cpu, Shield, Download, Check, 
+  FileText, Headphones, BookOpen, ArrowLeft, Sparkles,
   Workflow, Terminal, Box
 } from 'lucide-react';
 import { ChatWidget } from './components/ChatWidget';
