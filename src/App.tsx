@@ -5,6 +5,7 @@ import {
   FileText, Headphones, BookOpen, ArrowLeft, Sparkles,
   Workflow, Terminal, Box
 } from 'lucide-react';
+// Build: v2.1.0
 import { ChatWidget } from './components/ChatWidget';
 import { NodeDemo } from './components/NodeDemo';
 import { Pricing } from './components/Pricing';
