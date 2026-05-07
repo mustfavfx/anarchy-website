@@ -48,9 +48,7 @@ function App() {
             className="text-2xl font-bold text-white flex items-center gap-2"
             whileHover={{ scale: 1.02 }}
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-anarchy-red to-red-600 flex items-center justify-center">
-              <Box size={20} className="text-white" />
-            </div>
+            <img src="/logo.png" alt="Anarchy AI" className="w-8 h-8 rounded-lg" />
             Anarchy<span className="text-anarchy-red">AI</span>
           </motion.div>
           <div className="hidden md:flex items-center gap-8">
@@ -383,9 +381,7 @@ function App() {
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div className="col-span-2">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-anarchy-red to-red-600 flex items-center justify-center">
-                  <Zap size={18} className="text-white" />
-                </div>
+                <img src="/logo.png" alt="Anarchy AI" className="w-8 h-8 rounded-lg" />
                 <span className="text-xl font-bold text-white">Anarchy<span className="text-anarchy-red">AI</span></span>
               </div>
               <p className="text-gray-500 max-w-sm">
