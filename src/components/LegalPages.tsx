@@ -43,7 +43,11 @@ function LegalSection({ title, titleAr, content, contentAr, lang, icon: Icon }: 
   );
 }
 
-export function PrivacyPolicy() {
+interface LegalPageProps {
+  onBack: () => void;
+}
+
+export function PrivacyPolicy({ onBack }: LegalPageProps) {
   const [lang, setLang] = useState<'en' | 'ar'>('en');
 
   const sections = [
@@ -136,7 +140,7 @@ export function PrivacyPolicy() {
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          onClick={() => window.location.href = '/'}
+          onClick={onBack}
           className="flex items-center gap-2 text-gray-400 hover:text-white mb-8 glass px-4 py-2 rounded-full"
         >
           <ArrowLeft size={20} />
@@ -197,7 +201,7 @@ export function PrivacyPolicy() {
   );
 }
 
-export function TermsOfService() {
+export function TermsOfService({ onBack }: LegalPageProps) {
   const [lang, setLang] = useState<'en' | 'ar'>('en');
 
   const sections = [
@@ -286,7 +290,7 @@ export function TermsOfService() {
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          onClick={() => window.location.href = '/'}
+          onClick={onBack}
           className="flex items-center gap-2 text-gray-400 hover:text-white mb-8 glass px-4 py-2 rounded-full"
         >
           <ArrowLeft size={20} />
@@ -338,7 +342,7 @@ export function TermsOfService() {
   );
 }
 
-export function Disclaimer() {
+export function Disclaimer({ onBack }: LegalPageProps) {
   const [lang, setLang] = useState<'en' | 'ar'>('en');
 
   return (
@@ -347,7 +351,7 @@ export function Disclaimer() {
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          onClick={() => window.location.href = '/'}
+          onClick={onBack}
           className="flex items-center gap-2 text-gray-400 hover:text-white mb-8 glass px-4 py-2 rounded-full"
         >
           <ArrowLeft size={20} />

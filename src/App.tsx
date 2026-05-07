@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   ArrowRight, Zap, Download, Check, 
@@ -6,7 +6,7 @@ import {
   ArrowLeft, Sparkles,
   Box
 } from 'lucide-react';
-// Build: v2.1.2
+// Build: v2.1.3
 import { ChatWidget } from './components/ChatWidget';
 import { Pricing } from './components/Pricing';
 import { Features } from './components/Features';
@@ -16,9 +16,40 @@ function App() {
   const [showBilling, setShowBilling] = useState(false);
   const [currentPage, setCurrentPage] = useState<'home' | 'privacy' | 'terms' | 'disclaimer'>('home');
 
-  if (currentPage === 'privacy') return <PrivacyPolicy />;
-  if (currentPage === 'terms') return <TermsOfService />;
-  if (currentPage === 'disclaimer') return <Disclaimer />;
+  // Read URL on mount to determine initial page
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path === '/privacy') setCurrentPage('privacy');
+    else if (path === '/terms') setCurrentPage('terms');
+    else if (path === '/disclaimer') setCurrentPage('disclaimer');
+  }, []);
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      if (path === '/privacy') setCurrentPage('privacy');
+      else if (path === '/terms') setCurrentPage('terms');
+      else if (path === '/disclaimer') setCurrentPage('disclaimer');
+      else setCurrentPage('home');
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Navigate function that updates URL
+  const navigateTo = (page: 'home' | 'privacy' | 'terms' | 'disclaimer') => {
+    setCurrentPage(page);
+    if (page === 'home') {
+      window.history.pushState({}, '', '/');
+    } else {
+      window.history.pushState({}, '', `/${page}`);
+    }
+  };
+
+  if (currentPage === 'privacy') return <PrivacyPolicy onBack={() => navigateTo('home')} />;
+  if (currentPage === 'terms') return <TermsOfService onBack={() => navigateTo('home')} />;
+  if (currentPage === 'disclaimer') return <Disclaimer onBack={() => navigateTo('home')} />;
 
   if (showBilling) {
     return (
@@ -406,9 +437,9 @@ function App() {
             <div>
               <h4 className="text-white font-semibold mb-4">Legal</h4>
               <ul className="space-y-2 text-gray-500">
-                <li><button onClick={() => setCurrentPage('privacy')} className="hover:text-anarchy-red transition-colors">Privacy Policy</button></li>
-                <li><button onClick={() => setCurrentPage('terms')} className="hover:text-anarchy-red transition-colors">Terms of Service</button></li>
-                <li><button onClick={() => setCurrentPage('disclaimer')} className="hover:text-anarchy-red transition-colors">Disclaimer</button></li>
+                <li><button onClick={() => navigateTo('privacy')} className="hover:text-anarchy-red transition-colors">Privacy Policy</button></li>
+                <li><button onClick={() => navigateTo('terms')} className="hover:text-anarchy-red transition-colors">Terms of Service</button></li>
+                <li><button onClick={() => navigateTo('disclaimer')} className="hover:text-anarchy-red transition-colors">Disclaimer</button></li>
               </ul>
             </div>
           </div>
@@ -417,9 +448,9 @@ function App() {
               © 2026 Anarchy AI. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm text-gray-600">
-              <button onClick={() => setCurrentPage('privacy')} className="hover:text-gray-400 transition-colors">Privacy</button>
-              <button onClick={() => setCurrentPage('terms')} className="hover:text-gray-400 transition-colors">Terms</button>
-              <button onClick={() => setCurrentPage('disclaimer')} className="hover:text-gray-400 transition-colors">Disclaimer</button>
+              <button onClick={() => navigateTo('privacy')} className="hover:text-gray-400 transition-colors">Privacy</button>
+              <button onClick={() => navigateTo('terms')} className="hover:text-gray-400 transition-colors">Terms</button>
+              <button onClick={() => navigateTo('disclaimer')} className="hover:text-gray-400 transition-colors">Disclaimer</button>
             </div>
           </div>
         </div>
