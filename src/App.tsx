@@ -3,11 +3,10 @@ import { motion } from 'framer-motion';
 import { 
   ArrowRight, Zap, Download, Check, 
   FileText, Headphones, BookOpen, ArrowLeft, Sparkles,
-  Terminal, Box
+  Box
 } from 'lucide-react';
 // Build: v2.1.2
 import { ChatWidget } from './components/ChatWidget';
-import { NodeDemo } from './components/NodeDemo';
 import { Pricing } from './components/Pricing';
 import { Features } from './components/Features';
 
@@ -50,12 +49,12 @@ function App() {
             whileHover={{ scale: 1.02 }}
           >
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-anarchy-red to-red-600 flex items-center justify-center">
-              <Zap size={20} className="text-white" />
+              <Box size={20} className="text-white" />
             </div>
             Anarchy<span className="text-anarchy-red">AI</span>
           </motion.div>
           <div className="hidden md:flex items-center gap-8">
-            {['Features', 'Demo', 'Philosophy', 'Pricing'].map((item) => (
+            {['Features', 'Philosophy', 'Pricing'].map((item) => (
               <motion.a 
                 key={item}
                 href={`#${item.toLowerCase()}`} 
@@ -121,14 +120,6 @@ function App() {
                 Get Started 
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </motion.a>
-              <motion.a 
-                href="#demo" 
-                className="glass text-white px-8 py-4 rounded-xl font-medium hover:bg-white/10 transition-all flex items-center gap-2 border border-white/10"
-                whileHover={{ scale: 1.02 }}
-              >
-                <Terminal size={18} />
-                See Demo
-              </motion.a>
             </div>
           </motion.div>
 
@@ -173,9 +164,6 @@ function App() {
 
       {/* Features Section - Bento Grid */}
       <Features />
-
-      {/* Node Demo Section */}
-      <NodeDemo />
 
       {/* Philosophy Section */}
       <section id="philosophy" className="py-32 px-6 relative">
