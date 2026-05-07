@@ -50,10 +50,10 @@ function FeatureCard({
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   const sizeClasses = {
-    small: 'md:col-span-1 md:row-span-1',
-    medium: 'md:col-span-1 md:row-span-2',
-    large: 'md:col-span-2 md:row-span-2',
-    wide: 'md:col-span-2 md:row-span-1',
+    small: 'lg:col-span-1',
+    medium: 'lg:col-span-1',
+    large: 'md:col-span-2 lg:col-span-1',
+    wide: 'md:col-span-2 lg:col-span-1',
   };
 
   const isRTL = lang === 'ar';
@@ -268,8 +268,8 @@ export function Features() {
           </p>
         </motion.div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 gap-4 md:gap-6 auto-rows-fr">
+        {/* Bento Grid - 2x3 Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-[minmax(200px,auto)]">
           {features.map((feature, index) => (
             <FeatureCard
               key={index}
