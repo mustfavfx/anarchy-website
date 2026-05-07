@@ -2,16 +2,23 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   ArrowRight, Zap, Download, Check, 
-  FileText, Headphones, BookOpen, ArrowLeft, Sparkles,
+  Headphones, BookOpen, FileText,
+  ArrowLeft, Sparkles,
   Box
 } from 'lucide-react';
 // Build: v2.1.2
 import { ChatWidget } from './components/ChatWidget';
 import { Pricing } from './components/Pricing';
 import { Features } from './components/Features';
+import { PrivacyPolicy, TermsOfService, Disclaimer } from './components/LegalPages';
 
 function App() {
   const [showBilling, setShowBilling] = useState(false);
+  const [currentPage, setCurrentPage] = useState<'home' | 'privacy' | 'terms' | 'disclaimer'>('home');
+
+  if (currentPage === 'privacy') return <PrivacyPolicy />;
+  if (currentPage === 'terms') return <TermsOfService />;
+  if (currentPage === 'disclaimer') return <Disclaimer />;
 
   if (showBilling) {
     return (
@@ -397,11 +404,11 @@ function App() {
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Support</h4>
+              <h4 className="text-white font-semibold mb-4">Legal</h4>
               <ul className="space-y-2 text-gray-500">
-                <li><a href="#support" className="hover:text-anarchy-red transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-anarchy-red transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-anarchy-red transition-colors">Status</a></li>
+                <li><button onClick={() => setCurrentPage('privacy')} className="hover:text-anarchy-red transition-colors">Privacy Policy</button></li>
+                <li><button onClick={() => setCurrentPage('terms')} className="hover:text-anarchy-red transition-colors">Terms of Service</button></li>
+                <li><button onClick={() => setCurrentPage('disclaimer')} className="hover:text-anarchy-red transition-colors">Disclaimer</button></li>
               </ul>
             </div>
           </div>
@@ -410,8 +417,9 @@ function App() {
               © 2026 Anarchy AI. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm text-gray-600">
-              <a href="#" className="hover:text-gray-400 transition-colors">Privacy</a>
-              <a href="#" className="hover:text-gray-400 transition-colors">Terms</a>
+              <button onClick={() => setCurrentPage('privacy')} className="hover:text-gray-400 transition-colors">Privacy</button>
+              <button onClick={() => setCurrentPage('terms')} className="hover:text-gray-400 transition-colors">Terms</button>
+              <button onClick={() => setCurrentPage('disclaimer')} className="hover:text-gray-400 transition-colors">Disclaimer</button>
             </div>
           </div>
         </div>
