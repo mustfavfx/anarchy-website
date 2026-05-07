@@ -5,10 +5,11 @@ import {
   FileText, Headphones, BookOpen, ArrowLeft, Sparkles,
   Workflow, Terminal, Box
 } from 'lucide-react';
-// Build: v2.1.0
+// Build: v2.1.1
 import { ChatWidget } from './components/ChatWidget';
 import { NodeDemo } from './components/NodeDemo';
 import { Pricing } from './components/Pricing';
+import { Features } from './components/Features';
 
 function App() {
   const [showBilling, setShowBilling] = useState(false);
@@ -170,63 +171,8 @@ function App() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-32 px-6 relative">
-        <div className="absolute inset-0 gradient-mesh opacity-30" />
-        
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: true }} 
-            transition={{ duration: 0.8 }}
-            className="text-center mb-20"
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-sm mb-6">
-              <Layers size={16} />
-              Core Capabilities
-            </span>
-            <h2 className="text-headline text-white mb-6">Powerful Features</h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Everything you need to automate your architectural workflow with AI
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { icon: Zap, title: 'Visual Node Editor', description: 'Build complex workflows with an intuitive drag-and-drop interface. Connect nodes to create powerful automation chains.', gradient: 'from-yellow-500/20 to-orange-500/20' },
-              { icon: Layers, title: 'Multi-Stage Processing', description: 'Chain multiple AI operations together for complete automation. From sketch to final render in one workflow.', gradient: 'from-blue-500/20 to-cyan-500/20' },
-              { icon: Cpu, title: 'AI-Powered Generation', description: 'Leverage state-of-the-art AI models including FLUX, Ideogram, and custom trained models for your projects.', gradient: 'from-purple-500/20 to-pink-500/20' },
-              { icon: Shield, title: 'Secure & Private', description: 'Your data stays yours with local processing options and encrypted cloud storage for sensitive projects.', gradient: 'from-green-500/20 to-emerald-500/20' },
-              { icon: Download, title: 'Batch Processing', description: 'Process multiple images simultaneously to save time. Perfect for large architectural portfolios and variations.', gradient: 'from-red-500/20 to-rose-500/20' },
-              { icon: Workflow, title: 'Collaboration Ready', description: 'Share workflows with your team seamlessly. Version control and team workspaces for professional use.', gradient: 'from-indigo-500/20 to-violet-500/20' }
-            ].map((feature, index) => (
-              <motion.div 
-                key={index} 
-                initial={{ opacity: 0, y: 30 }} 
-                whileInView={{ opacity: 1, y: 0 }} 
-                viewport={{ once: true }} 
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="group glass-card rounded-2xl p-8 hover:border-anarchy-red/30 transition-all duration-300 cursor-pointer"
-              >
-                <div className={`
-                  w-14 h-14 rounded-xl bg-gradient-to-br ${feature.gradient}
-                  flex items-center justify-center mb-6 group-hover:scale-110 transition-transform
-                `}>
-                  <feature.icon size={28} className="text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-anarchy-red transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400 leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Features Section - Bento Grid */}
+      <Features />
 
       {/* Node Demo Section */}
       <NodeDemo />
