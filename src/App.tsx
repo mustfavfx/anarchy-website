@@ -11,6 +11,7 @@ import { ChatWidget } from './components/ChatWidget';
 import { Pricing } from './components/Pricing';
 import { Features } from './components/Features';
 import { PrivacyPolicy, TermsOfService, Disclaimer } from './components/LegalPages';
+import EarlyAccess from './components/EarlyAccess';
 
 function App() {
   const [showBilling, setShowBilling] = useState(false);
@@ -79,7 +80,7 @@ function App() {
       <motion.nav 
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5"
+        className="sticky top-0 z-50 backdrop-blur-md bg-black/75 border-b border-white/5"
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <motion.div 
@@ -103,9 +104,9 @@ function App() {
             ))}
             <motion.a 
               href="#download" 
-              className="bg-gradient-to-r from-anarchy-red to-red-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:shadow-[0_0_20px_rgba(225,29,72,0.4)] transition-all"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="border border-[#E63030] text-[#E63030] hover:bg-[#E63030] hover:text-white transition-colors duration-200 px-4 py-2 rounded-md text-sm font-medium"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               Download
             </motion.a>
@@ -114,7 +115,7 @@ function App() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center pt-20 px-6 relative">
+      <section className="min-h-screen flex items-center justify-center pt-20 px-6 relative bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2740%27%20height%3D%2740%27%20viewBox%3D%270%200%2040%2040%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27rgba(230%2C48%2C48%2C0.04)%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M40%200H0v40%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]">
         {/* Animated Background */}
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 grid-pattern opacity-20" />
@@ -136,25 +137,34 @@ function App() {
             </motion.span>
             
             <h1 className="text-display text-white mb-6">
-              Node-based AI Automation
+              The Intelligence Layer
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-anarchy-red via-red-400 to-anarchy-red animate-gradient">
-                for Architecture
+                for Architectural Visualization
               </span>
             </h1>
             
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Build intelligent workflows with visual nodes. Automate your architectural design process with state-of-the-art AI.
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-6 leading-relaxed">
+              Node-based AI workflows — designed for architects, built for scale.
             </p>
             
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <motion.a 
                 href="#download" 
-                className="bg-gradient-to-r from-anarchy-red to-red-600 text-white px-8 py-4 rounded-xl font-medium hover:shadow-[0_0_40px_rgba(225,29,72,0.4)] transition-all flex items-center gap-2 group"
+                className="bg-[#E63030] hover:bg-[#c42828] text-white px-6 py-3 rounded-md font-medium transition-colors flex items-center gap-2"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get Started 
+                Request Early Access
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </motion.a>
+              
+              <motion.a 
+                href="#features" 
+                className="border border-white/20 text-white/80 hover:border-white/40 px-6 py-3 rounded-md font-medium transition-colors flex items-center gap-2"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Watch Demo
               </motion.a>
             </div>
           </motion.div>
@@ -305,6 +315,9 @@ function App() {
       {/* Pricing Section */}
       <Pricing />
 
+      {/* Early Access CTA */}
+      <EarlyAccess />
+
       {/* Download Section */}
       <section id="download" className="py-32 px-6 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-anarchy-gray via-anarchy-dark to-anarchy-dark" />
@@ -423,7 +436,7 @@ function App() {
                 <span className="text-xl font-bold text-white">Anarchy<span className="text-anarchy-red">AI</span></span>
               </div>
               <p className="text-gray-500 max-w-sm">
-                Node-based AI automation for architecture. Transform your design workflow with intelligent AI tools.
+                Designed for architects. Powered by AI.
               </p>
             </div>
             <div>
@@ -444,9 +457,17 @@ function App() {
             </div>
           </div>
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-gray-600 text-sm">
-              © 2026 Anarchy AI. All rights reserved.
-            </p>
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+              <p className="text-gray-600 text-sm">
+                © 2025 Anarchy AI. All rights reserved.
+              </p>
+              <div className="flex items-center gap-6 text-sm text-gray-600">
+                <a href="#" className="hover:text-gray-400 transition-colors">Twitter/X</a>
+                <a href="#" className="hover:text-gray-400 transition-colors">LinkedIn</a>
+                <a href="#" className="hover:text-gray-400 transition-colors">GitHub</a>
+                <a href="#" className="hover:text-gray-400 transition-colors">Discord</a>
+              </div>
+            </div>
             <div className="flex items-center gap-6 text-sm text-gray-600">
               <button onClick={() => navigateTo('privacy')} className="hover:text-gray-400 transition-colors">Privacy</button>
               <button onClick={() => navigateTo('terms')} className="hover:text-gray-400 transition-colors">Terms</button>
