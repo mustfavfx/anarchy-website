@@ -1,8 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { 
-  Workflow, Layers, Zap, Shield, 
-  Cloud, Box, ArrowUpRight, Sparkles,
+  Zap, ArrowUpRight,
   GitBranch, Brain, Maximize, Layers2, WifiOff, Presentation
 } from 'lucide-react';
 
