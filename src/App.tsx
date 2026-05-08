@@ -264,7 +264,7 @@ function App() {
             <div className="glass rounded-3xl p-3 relative">
               <div className="bg-anarchy-dark rounded-2xl aspect-video overflow-hidden border border-white/5">
                 <img 
-                  src="/screenshots/builder-canvas.png"
+                  src="/screenshots/builder.png"
                   alt="ANARCHY Builder — Node Canvas with AI render workflow" 
                   className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
                 />
@@ -392,7 +392,7 @@ function App() {
               <div className="glass rounded-3xl p-4 relative">
                 <div className="relative rounded-2xl overflow-hidden">
                   <img 
-                    src="/screenshots/library-view.png"
+                    src="/screenshots/library.png"
                     alt="ANARCHY Library — Generated architectural render results" 
                     className="w-full h-full object-cover"
                   />
