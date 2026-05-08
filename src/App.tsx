@@ -173,13 +173,29 @@ function App() {
             </motion.span>
             
             <h1 className="text-display text-white mb-6">
-              <span className="word-reveal" style={{animationDelay:'0.3s'}}>The</span>{' '}
-              <span className="word-reveal" style={{animationDelay:'0.42s'}}>Intelligence</span>{' '}
-              <span className="word-reveal" style={{animationDelay:'0.54s'}}>Layer</span>
+              {['The', 'Intelligence', 'Layer'].map((word, i) => (
+                <motion.span
+                  key={word}
+                  className="word-reveal"
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 + i * 0.12, ease: [0.23, 1, 0.32, 1] }}
+                >
+                  {word}{' '}
+                </motion.span>
+              ))}
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-anarchy-red via-red-400 to-anarchy-red animate-gradient">
-                <span className="word-reveal" style={{animationDelay:'0.66s'}}>for</span>{' '}
-                <span className="word-reveal" style={{animationDelay:'0.78s'}}>Architectural</span>{' '}
-                <span className="word-reveal" style={{animationDelay:'0.90s'}}>Visualization</span>
+                {['for', 'Architectural', 'Visualization'].map((word, i) => (
+                  <motion.span
+                    key={word}
+                    className="word-reveal"
+                    initial={{ opacity: 0, y: 28 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.66 + i * 0.12, ease: [0.23, 1, 0.32, 1] }}
+                  >
+                    {word}{' '}
+                  </motion.span>
+                ))}
               </span>
             </h1>
             
