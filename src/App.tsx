@@ -119,6 +119,7 @@ function App() {
         {/* Animated Background */}
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 grid-pattern opacity-20" />
+        <div className="hero-glow" />
         
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.div 
@@ -137,9 +138,13 @@ function App() {
             </motion.span>
             
             <h1 className="text-display text-white mb-6">
-              The Intelligence Layer
+              <span className="word-reveal" style={{animationDelay:'0.3s'}}>The</span>{' '}
+              <span className="word-reveal" style={{animationDelay:'0.42s'}}>Intelligence</span>{' '}
+              <span className="word-reveal" style={{animationDelay:'0.54s'}}>Layer</span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-anarchy-red via-red-400 to-anarchy-red animate-gradient">
-                for Architectural Visualization
+                <span className="word-reveal" style={{animationDelay:'0.66s'}}>for</span>{' '}
+                <span className="word-reveal" style={{animationDelay:'0.78s'}}>Architectural</span>{' '}
+                <span className="word-reveal" style={{animationDelay:'0.90s'}}>Visualization</span>
               </span>
             </h1>
             
@@ -150,7 +155,7 @@ function App() {
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <motion.a 
                 href="#download" 
-                className="bg-[#E63030] hover:bg-[#c42828] text-white px-6 py-3 rounded-md font-medium transition-colors flex items-center gap-2"
+                className="btn-shimmer bg-[#E63030] hover:bg-[#c42828] text-white px-6 py-3 rounded-md font-medium transition-colors flex items-center gap-2"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >

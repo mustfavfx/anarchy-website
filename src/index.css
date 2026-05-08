@@ -181,6 +181,60 @@ body {
   animation: gradient-shift 15s ease infinite;
 }
 
+/* Split-text word slide-up animation */
+@keyframes word-up {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.word-reveal {
+  display: inline-block;
+  opacity: 0;
+  animation: word-up 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Shimmer Button Effect */
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(250%) skewX(-15deg); }
+}
+
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+/* Hero Radial Glow (rotating) */
+@keyframes rotate-glow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 700px;
+  height: 700px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.08) 0%, rgba(225, 29, 72, 0.06) 40%, transparent 70%);
+  animation: rotate-glow 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* Architectural Grid Pattern */
 .grid-pattern {
   background-image: 

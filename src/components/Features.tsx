@@ -1,9 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { 
-  Zap, ArrowUpRight,
-  GitBranch, Brain, Maximize, Layers2, WifiOff, Presentation
-} from 'lucide-react';
+import { Zap, ArrowUpRight, GitBranch, Brain, Maximize, Layers2, WifiOff, Presentation } from 'lucide-react';
 
 interface FeatureCardProps {
   icon: React.ElementType;
