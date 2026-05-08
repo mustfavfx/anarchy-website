@@ -115,7 +115,7 @@ function App() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center pt-20 px-6 relative bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2740%27%20height%3D%2740%27%20viewBox%3D%270%200%2040%2040%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27rgba(230%2C48%2C48%2C0.04)%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M40%200H0v40%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]">
+      <section className="min-h-screen flex items-center justify-center pt-20 px-6 relative overflow-hidden bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2740%27%20height%3D%2740%27%20viewBox%3D%270%200%2040%2040%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27rgba(230%2C48%2C48%2C0.04)%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M40%200H0v40%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]">
         {/* Animated Background */}
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 grid-pattern opacity-20" />
@@ -129,20 +129,20 @@ function App() {
               <stop offset="100%" stopColor="#E63030" stopOpacity="0" />
             </radialGradient>
           </defs>
-          {/* Node connections */}
+          {/* Node connections — opacity animation (pathLength only works on <path>) */}
           <motion.line x1="20%" y1="30%" x2="45%" y2="55%" stroke="rgba(230,48,48,0.3)" strokeWidth="1"
-            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 2, delay: 0.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
+            initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 2, delay: 0.5, repeat: Infinity, ease: "easeInOut" }} />
           <motion.line x1="45%" y1="55%" x2="70%" y2="35%" stroke="rgba(99,102,241,0.3)" strokeWidth="1"
-            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 2, delay: 1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
+            initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 2, delay: 1, repeat: Infinity, ease: "easeInOut" }} />
           <motion.line x1="70%" y1="35%" x2="85%" y2="65%" stroke="rgba(230,48,48,0.2)" strokeWidth="1"
-            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 2.5, delay: 1.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
+            initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 2.5, delay: 1.5, repeat: Infinity, ease: "easeInOut" }} />
           <motion.line x1="15%" y1="70%" x2="45%" y2="55%" stroke="rgba(99,102,241,0.2)" strokeWidth="1"
-            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 3, delay: 0.8, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
-          {/* Nodes */}
+            initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 3, delay: 0.8, repeat: Infinity, ease: "easeInOut" }} />
+          {/* Nodes — opacity pulse (scale on SVG circle is cross-browser unsafe) */}
           {[
             { cx: "20%", cy: "30%", delay: 0 },
             { cx: "45%", cy: "55%", delay: 0.4 },
@@ -151,7 +151,7 @@ function App() {
             { cx: "15%", cy: "70%", delay: 0.6 },
           ].map((node, i) => (
             <motion.circle key={i} cx={node.cx} cy={node.cy} r="4" fill="url(#nodeGrad)"
-              initial={{ scale: 0, opacity: 0 }} animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
+              initial={{ opacity: 0 }} animate={{ opacity: [0.3, 1, 0.3] }}
               transition={{ duration: 3, delay: node.delay, repeat: Infinity, ease: "easeInOut" }} />
           ))}
         </svg>

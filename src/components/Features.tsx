@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Zap, ArrowUpRight, GitBranch, Brain, Maximize, Layers2, WifiOff, Presentation } from 'lucide-react';
 
 interface FeatureCardProps {
@@ -147,7 +147,6 @@ function FeatureCard({
 export function Features() {
   const [lang, setLang] = useState<'en' | 'ar'>('en');
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   const features = [
     {
@@ -222,7 +221,8 @@ export function Features() {
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className={`text-center mb-16 ${lang === 'ar' ? 'font-arabic' : ''}`}
         >
@@ -280,8 +280,9 @@ export function Features() {
         {/* Bottom CTA */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className={`mt-16 text-center ${lang === 'ar' ? 'font-arabic' : ''}`}
         >
           <p className="text-gray-500 mb-4">
