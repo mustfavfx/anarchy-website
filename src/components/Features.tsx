@@ -10,7 +10,6 @@ interface FeatureCardProps {
   descriptionAr: string;
   size?: 'small' | 'medium' | 'large' | 'wide';
   gradient: string;
-  delay?: number;
   lang: 'en' | 'ar';
 }
 
@@ -40,11 +39,9 @@ function FeatureCard({
   descriptionAr, 
   size = 'medium',
   gradient,
-  delay = 0,
   lang
 }: FeatureCardProps) {
   const { ref, position, isHovered, setIsHovered, handleMouseMove } = useMouseGlow();
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   const sizeClasses = {
     small: 'lg:col-span-1',
@@ -58,9 +55,10 @@ function FeatureCard({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ duration: 0.7, delay, ease: [0.23, 1, 0.32, 1] }}
+      variants={{
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.23, 1, 0.32, 1] } }
+      }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -160,7 +158,6 @@ export function Features() {
       descriptionAr: 'محرر سير عمل مرئي مع اتصالات قائمة على العقد — صمم خط الأنابيب بشكل مرئي.',
       size: 'large' as const,
       gradient: 'from-blue-500/30 to-cyan-500/20',
-      delay: 0,
     },
     {
       icon: Brain,
@@ -170,7 +167,6 @@ export function Features() {
       descriptionAr: 'Kie AI و Gemini و Stable Diffusion في لوحة موحدة واحدة.',
       size: 'medium' as const,
       gradient: 'from-purple-500/30 to-pink-500/20',
-      delay: 0.1,
     },
     {
       icon: Maximize,
@@ -180,7 +176,6 @@ export function Features() {
       descriptionAr: 'تكامل مباشر مع MAXScript - أرسل العروض مباشرة من 3ds Max.',
       size: 'wide' as const,
       gradient: 'from-anarchy-red/30 to-orange-500/20',
-      delay: 0.2,
     },
     {
       icon: Layers2,
@@ -190,7 +185,6 @@ export function Features() {
       descriptionAr: 'شغل العشرات من الاختلافات بشكل متوازي بدون مغادرة سير عملك.',
       size: 'small' as const,
       gradient: 'from-green-500/30 to-emerald-500/20',
-      delay: 0.3,
     },
     {
       icon: WifiOff,
@@ -200,7 +194,6 @@ export function Features() {
       descriptionAr: 'يعمل محليًا على جهازك عبر Tauri. لا يحتاج إنترنت. بياناتك تبقى لك.',
       size: 'small' as const,
       gradient: 'from-indigo-500/30 to-violet-500/20',
-      delay: 0.4,
     },
     {
       icon: Presentation,
@@ -210,7 +203,6 @@ export function Features() {
       descriptionAr: 'انتقل لوضع العرض التقديمي واعرض النتائج مباشرة للعملاء.',
       size: 'medium' as const,
       gradient: 'from-yellow-500/30 to-amber-500/20',
-      delay: 0.5,
     },
   ];
 
@@ -265,8 +257,17 @@ export function Features() {
           </p>
         </motion.div>
 
-        {/* Bento Grid - 2x3 Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-[minmax(200px,auto)]">
+        {/* Bento Grid - 2x3 Layout with stagger */}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-[minmax(200px,auto)]"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.12 } }
+          }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+        >
           {features.map((feature, index) => (
             <FeatureCard
               key={index}
@@ -274,7 +275,7 @@ export function Features() {
               lang={lang}
             />
           ))}
-        </div>
+        </motion.div>
 
         {/* Bottom CTA */}
         <motion.div 

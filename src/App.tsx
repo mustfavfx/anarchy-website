@@ -120,6 +120,41 @@ function App() {
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="hero-glow" />
+
+        {/* SVG Animated Nodes */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#E63030" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#E63030" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+          {/* Node connections */}
+          <motion.line x1="20%" y1="30%" x2="45%" y2="55%" stroke="rgba(230,48,48,0.3)" strokeWidth="1"
+            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 2, delay: 0.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
+          <motion.line x1="45%" y1="55%" x2="70%" y2="35%" stroke="rgba(99,102,241,0.3)" strokeWidth="1"
+            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 2, delay: 1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
+          <motion.line x1="70%" y1="35%" x2="85%" y2="65%" stroke="rgba(230,48,48,0.2)" strokeWidth="1"
+            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 2.5, delay: 1.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
+          <motion.line x1="15%" y1="70%" x2="45%" y2="55%" stroke="rgba(99,102,241,0.2)" strokeWidth="1"
+            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 3, delay: 0.8, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
+          {/* Nodes */}
+          {[
+            { cx: "20%", cy: "30%", delay: 0 },
+            { cx: "45%", cy: "55%", delay: 0.4 },
+            { cx: "70%", cy: "35%", delay: 0.8 },
+            { cx: "85%", cy: "65%", delay: 1.2 },
+            { cx: "15%", cy: "70%", delay: 0.6 },
+          ].map((node, i) => (
+            <motion.circle key={i} cx={node.cx} cy={node.cy} r="4" fill="url(#nodeGrad)"
+              initial={{ scale: 0, opacity: 0 }} animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 3, delay: node.delay, repeat: Infinity, ease: "easeInOut" }} />
+          ))}
+        </svg>
         
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.div 
