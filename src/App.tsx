@@ -7,9 +7,9 @@ import {
   Box
 } from 'lucide-react';
 // Build: v2.1.3
-import { ChatWidget } from './components/ChatWidget';
 import { Pricing } from './components/Pricing';
 import { Features } from './components/Features';
+import { Integrations } from './components/Integrations';
 import { PrivacyPolicy, TermsOfService, Disclaimer } from './components/LegalPages';
 import EarlyAccess from './components/EarlyAccess';
 
@@ -68,8 +68,6 @@ function App() {
 
           <Pricing />
         </div>
-
-        <ChatWidget />
       </div>
     );
   }
@@ -104,7 +102,7 @@ function App() {
             ))}
             <motion.a 
               href="#download" 
-              className="border border-[#E63030] text-[#E63030] hover:bg-[#E63030] hover:text-white transition-colors duration-200 px-4 py-2 rounded-md text-sm font-medium"
+              className="border border-anarchy-red text-anarchy-red hover:bg-anarchy-red hover:text-white transition-colors duration-200 px-4 py-2 rounded-md text-sm font-medium"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -202,11 +200,21 @@ function App() {
             <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-6 leading-relaxed">
               Node-based AI workflows — designed for architects, built for scale.
             </p>
-            
+
+            {/* AI Engines Strip */}
+            <div className="flex items-center justify-center gap-3 flex-wrap mb-8">
+              <span className="text-xs text-gray-600 uppercase tracking-widest">Powered by</span>
+              {['Nano Banana 2', 'GPT Image 2', 'FLUX 2 Pro', 'Seedream 4.5', 'Grok Imagine'].map((engine) => (
+                <span key={engine} className="text-xs text-gray-400 bg-white/5 border border-white/10 px-3 py-1 rounded-full">
+                  {engine}
+                </span>
+              ))}
+            </div>
+
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <motion.a 
                 href="#download" 
-                className="btn-shimmer bg-[#E63030] hover:bg-[#c42828] text-white px-6 py-3 rounded-md font-medium transition-colors flex items-center gap-2"
+                className="btn-shimmer bg-anarchy-red hover:bg-anarchy-red/80 text-white px-6 py-3 rounded-md font-medium transition-colors flex items-center gap-2"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -225,6 +233,26 @@ function App() {
             </div>
           </motion.div>
 
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+            className="mt-12 flex items-center justify-center gap-12 flex-wrap"
+          >
+            {[
+              { value: '7+', label: 'AI Engines' },
+              { value: '5', label: 'Integrations' },
+              { value: '2K', label: 'Max Resolution' },
+              { value: '∞', label: 'Batch Renders' },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-3xl font-bold text-white">{stat.value}</div>
+                <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
+
           {/* Hero Visual */}
           <motion.div 
             initial={{ opacity: 0, y: 60, scale: 0.95 }} 
@@ -236,8 +264,8 @@ function App() {
             <div className="glass rounded-3xl p-3 relative">
               <div className="bg-anarchy-dark rounded-2xl aspect-video overflow-hidden border border-white/5">
                 <img 
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=675&fit=crop" 
-                  alt="Anarchy AI Dashboard" 
+                  src="/screenshots/builder-canvas.png"
+                  alt="ANARCHY Builder — Node Canvas with AI render workflow" 
                   className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
                 />
                 {/* Overlay UI Elements */}
@@ -264,8 +292,29 @@ function App() {
         </div>
       </section>
 
+      {/* Presets Marquee */}
+      <div className="relative overflow-hidden py-6 border-t border-b border-white/5">
+        <div className="flex gap-4 animate-[marquee_30s_linear_infinite] whitespace-nowrap">
+          {[
+            'Photorealistic Render', 'Golden Hour', 'Rainy Day', 'Autumn Scene',
+            'Night Scene', 'Cozy Night + LEDs', 'Fog', 'Volumetric Rays',
+            'Winter / Snow', 'Construction State', 'Developer Finish', 'Match Mood',
+            'Photorealistic Render', 'Golden Hour', 'Rainy Day', 'Autumn Scene',
+            'Night Scene', 'Cozy Night + LEDs', 'Fog', 'Volumetric Rays',
+          ].map((preset, i) => (
+            <span key={i} className="inline-flex items-center gap-2 text-sm text-gray-500 px-4 py-1.5 rounded-full border border-white/5 bg-white/[0.02] flex-shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-anarchy-red/60" />
+              {preset}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Features Section - Bento Grid */}
       <Features />
+
+      {/* Integrations Strip */}
+      <Integrations />
 
       {/* Philosophy Section */}
       <section id="philosophy" className="py-32 px-6 relative">
@@ -343,8 +392,8 @@ function App() {
               <div className="glass rounded-3xl p-4 relative">
                 <div className="relative rounded-2xl overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop" 
-                    alt="Architecture Workflow" 
+                    src="/screenshots/library-view.png"
+                    alt="ANARCHY Library — Generated architectural render results" 
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-anarchy-dark via-transparent to-transparent" />
@@ -533,9 +582,18 @@ function App() {
         </div>
       </footer>
 
-      {/* Chat Widget */}
+      {/* Discord / Support Button */}
       <div className="fixed bottom-6 right-6 z-50">
-        <ChatWidget />
+        <motion.a
+          href="https://discord.gg/anarchy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 bg-anarchy-red text-white px-4 py-3 rounded-full shadow-lg hover:bg-anarchy-red/80 transition-colors font-medium text-sm"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          💬 Join Discord
+        </motion.a>
       </div>
     </div>
   );

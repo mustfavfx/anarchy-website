@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'anarchy-red': '#e11d48',
+        'anarchy-red': '#E63030',
         'anarchy-dark': '#0a0a0c',
         'anarchy-gray': '#1a1a1e',
         'anarchy-surface': '#141418',
@@ -24,6 +24,7 @@ export default {
         'float': 'float 6s ease-in-out infinite',
         'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
         'gradient-shift': 'gradient-shift 15s ease infinite',
+        'marquee': 'marquee 30s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -46,6 +47,10 @@ export default {
           '0%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
           '100%': { backgroundPosition: '0% 50%' },
+        },
+        'marquee': {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
       },
       backgroundImage: {
