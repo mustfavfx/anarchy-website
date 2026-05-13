@@ -1,26 +1,33 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check, Loader2 } from 'lucide-react';
-
-async function submitWaitlist(email: string): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 900));
-  console.info('Waitlist submission:', email);
-  // Replace with: await supabase.from('waitlist').insert({ email });
-}
+import { submitWaitlistEmail } from '../services/waitlistService';
 
 export function CTASection() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) return;
+    
     setStatus('loading');
+    setMessage('');
+    
     try {
-      await submitWaitlist(email.trim());
-      setStatus('done');
+      const result = await submitWaitlistEmail(email.trim());
+      
+      if (result.success) {
+        setStatus('done');
+        setMessage(result.message);
+      } else {
+        setStatus('error');
+        setMessage(result.message);
+      }
     } catch {
       setStatus('error');
+      setMessage('Something went wrong. Please try again.');
     }
   };
 
@@ -71,7 +78,7 @@ export function CTASection() {
               <div className="w-7 h-7 rounded-full bg-anarchy-red flex items-center justify-center">
                 <Check size={14} className="text-white" />
               </div>
-              <span className="font-medium">You're on the list — we'll be in touch.</span>
+              <span className="font-medium">{message || "You're on the list — we'll be in touch."}</span>
             </motion.div>
           ) : (
             <form
@@ -110,7 +117,7 @@ export function CTASection() {
           )}
 
           {status === 'error' && (
-            <p className="mt-3 text-sm text-red-400">Something went wrong. Please try again.</p>
+            <p className="mt-3 text-sm text-red-400">{message || 'Something went wrong. Please try again.'}</p>
           )}
 
           <p className="mt-5 text-xs text-gray-600">

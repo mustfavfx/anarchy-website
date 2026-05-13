@@ -1,12 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { DemoPreview } from './components/DemoPreview';
+import { BeforeAfter } from './components/BeforeAfter';
 import { ProductShowcase } from './components/ProductShowcase';
 import { WorkflowSection } from './components/WorkflowSection';
 import { UseCases } from './components/UseCases';
 import { Features } from './components/Features';
 import { Integrations } from './components/Integrations';
 import { Comparison } from './components/Comparison';
+import { TrustSection } from './components/TrustSection';
 import { PricingPreview } from './components/PricingPreview';
 import { Pricing } from './components/Pricing';
 import { FAQ } from './components/FAQ';
@@ -42,12 +45,15 @@ function HomePage() {
         </div>
       </div>
 
+      <DemoPreview />
+      <BeforeAfter />
       <ProductShowcase />
       <WorkflowSection />
       <UseCases />
       <Features />
       <Integrations />
       <Comparison />
+      <TrustSection />
       <PricingPreview />
       <div id="pricing-full">
         <Pricing />

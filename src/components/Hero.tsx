@@ -50,12 +50,12 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
           className="text-display text-white mb-6 max-w-5xl mx-auto"
         >
-          The AI{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-anarchy-red via-red-400 to-anarchy-red animate-gradient">
-            Intelligence Layer
-          </span>
+          Build AI Render Workflows
           <br />
-          for Architectural Visualization
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-anarchy-red via-red-400 to-anarchy-red animate-gradient">
+            for Architecture
+          </span>{' '}
+          — Without Repeating Prompts
         </motion.h1>
 
         {/* Subheadline */}
@@ -65,8 +65,8 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.22 }}
           className="text-lg text-gray-400 max-w-2xl mx-auto mb-6 leading-relaxed"
         >
-          Connect your 3D tools to a visual node canvas. Generate, upscale, and iterate
-          architectural renders with 7+ AI engines — all in one workflow.
+          Upload a design screenshot, connect AI nodes, generate multiple render directions,
+          upscale the best results, and save every output inside one visual workflow.
         </motion.p>
 
         {/* AI engine pills */}
@@ -109,18 +109,28 @@ export function Hero() {
             <ArrowRight size={16} />
           </motion.a>
           <motion.a
-            href="#showcase"
+            href="#demo"
             onClick={(e) => {
               e.preventDefault();
-              document.querySelector('#showcase')?.scrollIntoView({ behavior: 'smooth' });
+              document.querySelector('#demo')?.scrollIntoView({ behavior: 'smooth' });
             }}
             className="text-sm text-gray-300 border border-white/10 hover:border-white/25 px-7 py-3.5 rounded-xl transition-all hover:bg-white/[0.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-anarchy-red"
             whileHover={{ scale: 1.03, y: -1 }}
             whileTap={{ scale: 0.97 }}
           >
-            See it in action
+            Watch Workflow
           </motion.a>
         </motion.div>
+
+        {/* Trust line */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="text-xs text-gray-500 mt-4"
+        >
+          Built for architects, interior designers, and visualization teams.
+        </motion.p>
 
         {/* Stats row */}
         <motion.div
