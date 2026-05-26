@@ -10,8 +10,6 @@ import { Features } from './components/Features';
 import { Integrations } from './components/Integrations';
 import { Comparison } from './components/Comparison';
 import { TrustSection } from './components/TrustSection';
-import { PricingPreview } from './components/PricingPreview';
-import { Pricing } from './components/Pricing';
 import { FAQ } from './components/FAQ';
 import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
@@ -54,10 +52,6 @@ function HomePage() {
       <Integrations />
       <Comparison />
       <TrustSection />
-      <PricingPreview />
-      <div id="pricing-full">
-        <Pricing />
-      </div>
       <FAQ />
       <CTASection />
     </main>

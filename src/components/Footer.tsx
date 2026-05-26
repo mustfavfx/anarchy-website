@@ -15,10 +15,9 @@ const companyLinks = [
 ];
 
 const socialLinks = [
-  { label: 'Twitter / X', href: '#' },
-  { label: 'GitHub', href: '#' },
-  { label: 'Discord', href: 'https://discord.gg/anarchy' },
-  { label: 'LinkedIn', href: '#' },
+  { label: 'Instagram', href: 'https://www.instagram.com/anarchy.lat/' },
+  { label: 'Telegram', href: 'https://t.me/anarchyforarchitecture' },
+  { label: 'Email', href: 'mailto:anarchy.lat@gmail.com', email: 'anarchy.lat@gmail.com' },
 ];
 
 export function Footer() {
@@ -103,7 +102,7 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/[0.05] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-gray-600">© 2025 Anarchy AI. All rights reserved.</p>
+          <p className="text-xs text-gray-600">© 2026 Anarchy AI. All rights reserved.</p>
           <p className="text-xs text-gray-700">Designed for architects. Powered by AI.</p>
         </div>
       </div>

@@ -277,25 +277,6 @@ export function Features() {
           ))}
         </motion.div>
 
-        {/* Bottom CTA */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className={`mt-16 text-center ${lang === 'ar' ? 'font-arabic' : ''}`}
-        >
-          <p className="text-gray-500 mb-4">
-            {lang === 'ar' 
-              ? 'هل تريد رؤية المزيد من المميزات؟'
-              : 'Want to see more features?'
-            }
-          </p>
-          <button className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-anarchy-red to-red-600 text-white font-medium hover:shadow-[0_0_40px_rgba(225,29,72,0.3)] transition-all group">
-            {lang === 'ar' ? 'اكتشف كل المميزات' : 'Explore All Features'}
-            <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </button>
-        </motion.div>
       </div>
     </section>
   );

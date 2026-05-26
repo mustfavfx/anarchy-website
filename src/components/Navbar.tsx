@@ -84,19 +84,13 @@ export function Navbar() {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <Link
-            to="/#download"
-            className="text-sm text-gray-400 hover:text-white px-4 py-2 rounded-md hover:bg-white/5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-anarchy-red"
-          >
-            Download
-          </Link>
           <motion.button
-            onClick={() => handleAnchor('#waitlist')}
+            onClick={() => handleAnchor('#download')}
             className="btn-shimmer bg-anarchy-red text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-anarchy-red/90 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
           >
-            Request Access
+            Download
           </motion.button>
         </div>
 
@@ -135,10 +129,10 @@ export function Navbar() {
               ))}
               <div className="pt-3 border-t border-white/5 mt-3">
                 <button
-                  onClick={() => handleAnchor('#waitlist')}
+                  onClick={() => handleAnchor('#download')}
                   className="w-full bg-anarchy-red text-white text-sm font-medium px-4 py-3 rounded-lg hover:bg-anarchy-red/90 transition-colors text-center"
                 >
-                  Request Early Access
+                  Download
                 </button>
               </div>
             </div>

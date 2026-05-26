@@ -85,17 +85,31 @@ export function DemoPreview() {
               </div>
             ) : (
               <div className="aspect-video bg-anarchy-dark relative overflow-hidden">
+                {/* Windows Frame Header */}
+                <div className="h-8 bg-[#1e1e1e] border-b border-white/10 flex items-center px-3 gap-2">
+                  {/* Window controls - Windows style (right side) */}
+                  <div className="flex-1 flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                    <div className="w-3 h-3 rounded-full bg-[#27ca40]" />
+                  </div>
+                  {/* Window title */}
+                  <span className="text-xs text-gray-500">Anarchy AI Builder</span>
+                  <div className="flex-1" />
+                </div>
+                
                 {/* Active Step Screenshot */}
-                <img
-                  src={steps[activeStep].image}
-                  alt={steps[activeStep].title}
-                  className="w-full h-full object-cover object-top opacity-90 transition-all duration-500"
-                  loading="lazy"
-                />
+                <div className="absolute inset-8 top-8">
+                  <img
+                    src={steps[activeStep].image}
+                    alt={steps[activeStep].title}
+                    className="w-full h-full object-cover object-top opacity-90 transition-all duration-500 rounded-b-lg"
+                    loading="lazy"
+                  />
+                </div>
                 
                 {/* Overlay with step info */}
-                <div className="absolute inset-0 bg-gradient-to-t from-anarchy-dark via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="absolute inset-x-8 bottom-8 bg-gradient-to-t from-anarchy-dark via-anarchy-dark/80 to-transparent pt-20 pb-6 px-6 rounded-b-lg">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-10 h-10 rounded-lg bg-anarchy-red/20 flex items-center justify-center">
                       {(() => {
