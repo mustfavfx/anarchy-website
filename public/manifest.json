@@ -1,0 +1,45 @@
+{
+  "name": "Anarchy AI — AI Render Workflow Platform",
+  "short_name": "Anarchy AI",
+  "description": "Create reusable AI render workflows for architecture. Generate, upscale, compare, and manage visual directions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08080a",
+  "theme_color": "#E63030",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "graphics", "utilities"],
+  "screenshots": [
+    {
+      "src": "/screenshots/builder.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Get Started",
+      "short_name": "Start",
+      "description": "Start using Anarchy AI",
+      "url": "/#demo",
+      "icons": [{ "src": "/logo.png", "sizes": "192x192" }]
+    }
+  ]
+}

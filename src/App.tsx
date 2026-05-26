@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Hero } from './components/Hero';
 import { DemoPreview } from './components/DemoPreview';
 import { BeforeAfter } from './components/BeforeAfter';
@@ -7,6 +9,7 @@ import { ProductShowcase } from './components/ProductShowcase';
 import { WorkflowSection } from './components/WorkflowSection';
 import { UseCases } from './components/UseCases';
 import { Features } from './components/Features';
+import { Pricing } from './components/Pricing';
 import { Integrations } from './components/Integrations';
 import { Comparison } from './components/Comparison';
 import { TrustSection } from './components/TrustSection';
@@ -49,6 +52,7 @@ function HomePage() {
       <WorkflowSection />
       <UseCases />
       <Features />
+      <Pricing />
       <Integrations />
       <Comparison />
       <TrustSection />
@@ -58,10 +62,29 @@ function HomePage() {
   );
 }
 
+// Register service worker for PWA
+function useServiceWorker() {
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          console.log('[SW] Registered:', registration.scope);
+        })
+        .catch((error) => {
+          console.log('[SW] Registration failed:', error);
+        });
+    }
+  }, []);
+}
+
 function App() {
+  useServiceWorker();
+
   return (
-    <div className="min-h-screen bg-anarchy-dark overflow-x-hidden">
-      <Navbar />
+    <ErrorBoundary>
+      <div className="min-h-screen bg-anarchy-dark overflow-x-hidden">
+        <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/privacy" element={<PrivacyPolicy onBack={() => window.history.back()} />} />
@@ -69,7 +92,8 @@ function App() {
         <Route path="/disclaimer" element={<Disclaimer onBack={() => window.history.back()} />} />
       </Routes>
       <Footer />
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
 

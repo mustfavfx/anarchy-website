@@ -536,13 +536,14 @@ export function Hero() {
                   <div className="w-3 h-3 rounded-full bg-[#27ca40]" />
                 </div>
               </div>
-              <div className="rounded-xl overflow-hidden bg-anarchy-dark aspect-video">
+              <div className="rounded-xl overflow-hidden bg-anarchy-dark">
                 <img
-                  src="/screenshots/builder.png"
+                  src="/screenshots/builder-new.png"
                   alt="Anarchy AI Builder — Node canvas with connected AI render workflow"
-                  className="w-full h-full object-cover object-top opacity-95 hover:opacity-100 transition-opacity duration-300"
+                  className="w-full h-auto object-contain opacity-95 hover:opacity-100 transition-opacity duration-300"
                   loading="lazy"
                   decoding="async"
+                  style={{ display: 'block' }}
                 />
                 {/* Overlay badges */}
                 <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between pointer-events-none">
