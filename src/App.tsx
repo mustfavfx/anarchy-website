@@ -12,6 +12,7 @@ import { Features } from './components/Features';
 import { Pricing } from './components/Pricing';
 import { Integrations } from './components/Integrations';
 import { Comparison } from './components/Comparison';
+import { Testimonials } from './components/Testimonials';
 import { TrustSection } from './components/TrustSection';
 import { FAQ } from './components/FAQ';
 import { CTASection } from './components/CTASection';
@@ -55,6 +56,7 @@ function HomePage() {
       <Pricing />
       <Integrations />
       <Comparison />
+      <Testimonials />
       <TrustSection />
       <FAQ />
       <CTASection />
