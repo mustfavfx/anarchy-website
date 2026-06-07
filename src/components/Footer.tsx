@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { APP_INFO } from '../config/appInfo';
 
 const productLinks = [
   { label: 'Features', href: '#features' },
@@ -15,9 +16,9 @@ const companyLinks = [
 ];
 
 const socialLinks = [
-  { label: 'Instagram', href: 'https://www.instagram.com/anarchy.lat/' },
-  { label: 'Telegram', href: 'https://t.me/anarchyforarchitecture' },
-  { label: 'Email', href: 'mailto:anarchy.lat@gmail.com', email: 'anarchy.lat@gmail.com' },
+  { label: 'Instagram', href: APP_INFO.links.instagram },
+  { label: 'Telegram',  href: APP_INFO.links.telegram },
+  { label: 'Email',     href: APP_INFO.links.support, email: APP_INFO.links.email },
 ];
 
 export function Footer() {

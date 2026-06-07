@@ -14,7 +14,7 @@ import { Integrations } from './components/Integrations';
 import { Comparison } from './components/Comparison';
 import { Testimonials } from './components/Testimonials';
 import { TrustSection } from './components/TrustSection';
-import { FAQ } from './components/FAQ';
+import { FAQ as FaqSection } from './components/FAQ';
 import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
 import { PrivacyPolicy, TermsOfService, Disclaimer } from './components/LegalPages';
@@ -58,7 +58,7 @@ function HomePage() {
       <Comparison />
       <Testimonials />
       <TrustSection />
-      <FAQ />
+      <FaqSection />
       <CTASection />
     </main>
   );
@@ -89,9 +89,9 @@ function App() {
         <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/privacy" element={<PrivacyPolicy onBack={() => window.history.back()} />} />
-        <Route path="/terms" element={<TermsOfService onBack={() => window.history.back()} />} />
-        <Route path="/disclaimer" element={<Disclaimer onBack={() => window.history.back()} />} />
+        <Route path="/privacy" element={<PrivacyPolicy onBack={() => globalThis.history.back()} />} />
+        <Route path="/terms" element={<TermsOfService onBack={() => globalThis.history.back()} />} />
+        <Route path="/disclaimer" element={<Disclaimer onBack={() => globalThis.history.back()} />} />
       </Routes>
       <Footer />
       </div>

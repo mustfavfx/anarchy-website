@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Check, Loader2, Mail, User, MessageSquare } from 'lucide-react';
 import { submitContactForm } from '../services/contactService';
+import { APP_INFO } from '../config/appInfo';
 
 export function CTASection() {
   const [name, setName] = useState('');
@@ -174,8 +175,8 @@ export function CTASection() {
 
           <p className="mt-5 text-xs text-gray-600">
             Your message will be sent to{' '}
-            <a href="mailto:anarchy.lat@gmail.com" className="text-anarchy-red hover:underline">
-              anarchy.lat@gmail.com
+            <a href={APP_INFO.links.support} className="text-anarchy-red hover:underline">
+              {APP_INFO.links.email}
             </a>
           </p>
         </motion.div>

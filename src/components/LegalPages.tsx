@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Shield, FileText, AlertTriangle, ChevronRight } from 'lucide-react';
 
 interface LegalSectionProps {
-  title: string;
-  titleAr: string;
-  content: string[];
-  contentAr: string[];
-  lang: 'en' | 'ar';
-  icon?: React.ElementType;
+  readonly title: string;
+  readonly titleAr: string;
+  readonly content: string[];
+  readonly contentAr: string[];
+  readonly lang: 'en' | 'ar';
+  readonly icon?: React.ElementType;
 }
 
 function LegalSection({ title, titleAr, content, contentAr, lang, icon: Icon }: LegalSectionProps) {
@@ -33,8 +33,8 @@ function LegalSection({ title, titleAr, content, contentAr, lang, icon: Icon }: 
         </h2>
       </div>
       <div className="glass-card rounded-2xl p-6">
-        {(isRTL ? contentAr : content).map((paragraph, index) => (
-          <p key={index} className="text-gray-400 leading-relaxed mb-4 last:mb-0">
+        {(isRTL ? contentAr : content).map((paragraph) => (
+          <p key={paragraph.slice(0, 40)} className="text-gray-400 leading-relaxed mb-4 last:mb-0">
             {paragraph}
           </p>
         ))}
@@ -44,7 +44,7 @@ function LegalSection({ title, titleAr, content, contentAr, lang, icon: Icon }: 
 }
 
 interface LegalPageProps {
-  onBack: () => void;
+  readonly onBack: () => void;
 }
 
 export function PrivacyPolicy({ onBack }: LegalPageProps) {
@@ -184,8 +184,8 @@ export function PrivacyPolicy({ onBack }: LegalPageProps) {
           </p>
         </div>
 
-        {sections.map((section, index) => (
-          <LegalSection key={index} {...section} lang={lang} />
+        {sections.map((section) => (
+          <LegalSection key={section.title} {...section} lang={lang} />
         ))}
 
         <div className={`mt-12 pt-8 border-t border-white/10 text-center ${lang === 'ar' ? 'font-arabic' : ''}`}>
@@ -325,8 +325,8 @@ export function TermsOfService({ onBack }: LegalPageProps) {
           </button>
         </div>
 
-        {sections.map((section, index) => (
-          <LegalSection key={index} {...section} lang={lang} />
+        {sections.map((section) => (
+          <LegalSection key={section.title} {...section} lang={lang} />
         ))}
 
         <div className={`mt-12 pt-8 border-t border-white/10 text-center ${lang === 'ar' ? 'font-arabic' : ''}`}>
@@ -436,8 +436,8 @@ export function Disclaimer({ onBack }: LegalPageProps) {
               'Should be reviewed and verified by professionals before use in real-world projects',
               'May contain errors, visual artifacts, or design flaws',
               'Should not be relied upon as a substitute for professional judgment or engineering expertise'
-            ]).map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
+            ]).map((item) => (
+              <li key={item.slice(0, 40)} className="flex items-start gap-2">
                 <span className="text-anarchy-red mt-1">•</span>
                 {item}
               </li>
@@ -472,8 +472,8 @@ export function Disclaimer({ onBack }: LegalPageProps) {
               'Obtaining necessary approvals and permits from relevant authorities',
               'Verifying the structural integrity and safety of architectural designs',
               'Respecting the intellectual property rights and copyrights of others'
-            ]).map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
+            ]).map((item) => (
+              <li key={item.slice(0, 40)} className="flex items-start gap-2">
                 <span className="text-anarchy-red mt-1">•</span>
                 {item}
               </li>
