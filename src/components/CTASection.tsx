@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Check, Loader2, Mail, User, MessageSquare } from 'lucide-react';
-import { submitContactForm } from '../services/contactService';
 import { useLanguage } from '../contexts/LanguageContext';
+import { APP_INFO } from '../config/appInfo';
+import { submitContactForm } from '../services/contactService';
 
 export function CTASection() {
   const { t } = useLanguage();
@@ -169,6 +170,12 @@ export function CTASection() {
           {status === 'error' && (
             <p className="mt-3 text-sm text-red-400">{statusMessage || t.contact.error}</p>
           )}
+          <p className="mt-5 text-xs text-gray-600">
+            Your message will be sent to{' '}
+            <a href={APP_INFO.links.support} className="text-anarchy-red hover:underline">
+              {APP_INFO.links.email}
+            </a>
+          </p>
         </motion.div>
       </div>
     </section>

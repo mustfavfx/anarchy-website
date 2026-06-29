@@ -2,5 +2,8 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "devCommand": "npm run dev",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/auth-callback.html", "destination": "/auth-callback.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
