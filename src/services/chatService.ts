@@ -1,6 +1,6 @@
 export async function sendChatMessage(messages: { role: 'user' | 'assistant' | 'system'; content: string }[]): Promise<string> {
   // For now, return a simple response since this is a static site
-  // In production, this would call Replicate API with the API key
+  // In production, this would call AI providers with the API key
   
   const lastUserMessage = messages[messages.length - 1]?.content.toLowerCase();
   
@@ -18,7 +18,7 @@ export async function sendChatMessage(messages: { role: 'user' | 'assistant' | '
   }
   
   if (lastUserMessage.includes('model') || lastUserMessage.includes('ai') || lastUserMessage.includes('flux')) {
-    return 'Anarchy AI uses multiple AI models including flux-schnell for fast generation, flux-dev for HD quality, flux-1.1-pro for 4K quality, and ideogram-v3 for premium results. All models are powered by Replicate API.';
+    return 'Anarchy AI uses multiple AI models including flux-schnell for fast generation, flux-dev for HD quality, flux-1.1-pro for 4K quality, and ideogram-v3 for premium results. All models are powered by our AI providers.';
   }
   
   // Default response for unrelated topics

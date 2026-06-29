@@ -1,23 +1,34 @@
 import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Navbar } from './components/Navbar';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import './styles/open-design-enhancements.css';
+import './styles/identity-unified.css';
+import { NavbarUnified } from './components/NavbarUnified';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Hero } from './components/Hero';
 import { DemoPreview } from './components/DemoPreview';
 import { BeforeAfter } from './components/BeforeAfter';
 import { ProductShowcase } from './components/ProductShowcase';
 import { WorkflowSection } from './components/WorkflowSection';
-import { UseCases } from './components/UseCases';
-import { Features } from './components/Features';
 import { Pricing } from './components/Pricing';
 import { Integrations } from './components/Integrations';
 import { Comparison } from './components/Comparison';
-import { Testimonials } from './components/Testimonials';
 import { TrustSection } from './components/TrustSection';
-import { FAQ } from './components/FAQ';
+import { FAQ as FaqSection } from './components/FAQ';
 import { CTASection } from './components/CTASection';
-import { Footer } from './components/Footer';
+import DirectAccess from './components/EarlyAccess';
+import { FooterEnhanced } from './components/FooterEnhanced';
 import { PrivacyPolicy, TermsOfService, Disclaimer } from './components/LegalPages';
+import { Documentation } from './components/Documentation';
+import { Changelog } from './components/Changelog';
+import { LanguageProvider } from './contexts/LanguageContext';
+import { ParticleNetwork } from './components/ParticleNetwork';
+import { GlitchScanEffect } from './components/GlitchScanEffect';
+import { TerminalNotifications } from './components/TerminalNotifications';
+import { SoundDesign } from './components/SoundDesign';
+import { ShaderEffects } from './components/WebGLShaders';
+import { CustomCursor } from './components/CustomCursor';
+import { PageTransition } from './components/PageTransition';
 
 const presets = [
   'Photorealistic Render', 'Golden Hour', 'Rainy Day', 'Autumn Scene',
@@ -51,14 +62,12 @@ function HomePage() {
       <BeforeAfter />
       <ProductShowcase />
       <WorkflowSection />
-      <UseCases />
-      <Features />
+      <DirectAccess />
       <Pricing />
       <Integrations />
       <Comparison />
-      <Testimonials />
       <TrustSection />
-      <FAQ />
+      <FaqSection />
       <CTASection />
     </main>
   );
@@ -67,7 +76,7 @@ function HomePage() {
 // Register service worker for PWA
 function useServiceWorker() {
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
+    if (import.meta.env.PROD && 'serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('/sw.js')
         .then((registration) => {
@@ -80,21 +89,68 @@ function useServiceWorker() {
   }, []);
 }
 
+// Wrapper component to provide navigate function to legal pages
+function LegalPageWrapper({ Component }: { Component: React.ComponentType<{ onBack: () => void }> }) {
+  const navigate = useNavigate();
+  return <Component onBack={() => navigate(-1)} />;
+}
+
 function App() {
   useServiceWorker();
+  const location = useLocation();
 
   return (
     <ErrorBoundary>
+      <LanguageProvider>
       <div className="min-h-screen bg-anarchy-dark overflow-x-hidden">
-        <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/privacy" element={<PrivacyPolicy onBack={() => window.history.back()} />} />
-        <Route path="/terms" element={<TermsOfService onBack={() => window.history.back()} />} />
-        <Route path="/disclaimer" element={<Disclaimer onBack={() => window.history.back()} />} />
-      </Routes>
-      <Footer />
+        {/* Custom Cursor */}
+        <CustomCursor />
+        
+        {/* Background Effects */}
+        <ShaderEffects />
+        <ParticleNetwork />
+        <GlitchScanEffect />
+        <TerminalNotifications />
+        <SoundDesign />
+
+        <NavbarUnified />
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={
+              <PageTransition>
+                <HomePage />
+              </PageTransition>
+            } />
+            <Route path="/docs" element={
+              <PageTransition>
+                <Documentation />
+              </PageTransition>
+            } />
+            <Route path="/changelog" element={
+              <PageTransition>
+                <Changelog />
+              </PageTransition>
+            } />
+            <Route path="/privacy" element={
+              <PageTransition>
+                <LegalPageWrapper Component={PrivacyPolicy} />
+              </PageTransition>
+            } />
+            <Route path="/terms" element={
+              <PageTransition>
+                <LegalPageWrapper Component={TermsOfService} />
+              </PageTransition>
+            } />
+            <Route path="/disclaimer" element={
+              <PageTransition>
+                <LegalPageWrapper Component={Disclaimer} />
+              </PageTransition>
+            } />
+          </Routes>
+        </AnimatePresence>
+        <FooterEnhanced />
       </div>
+      </LanguageProvider>
     </ErrorBoundary>
   );
 }

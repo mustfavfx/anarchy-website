@@ -1,30 +1,32 @@
 import { motion } from 'framer-motion';
 import { Workflow, Layers, FolderOpen } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
-const trustBlocks = [
+const getTrustBlocks = (t: any) => [
   {
     icon: Workflow,
-    title: 'Built around real architectural workflows',
-    description: 'Designed with input from visualization studios and design teams who need reliable, repeatable render pipelines.',
+    title: t.trust.workflowTitle,
+    description: t.trust.workflowDesc,
   },
   {
     icon: Layers,
-    title: 'Multi-engine generation from one canvas',
-    description: 'Connect GPT Image, FLUX, Seedream, and more — all from the same node workflow without switching tools.',
+    title: t.trust.multiEngineTitle,
+    description: t.trust.multiEngineDesc,
   },
   {
     icon: FolderOpen,
-    title: 'Project library for every render iteration',
-    description: 'Every generation is saved with full context. Compare versions, restore prompts, and build on past work.',
+    title: t.trust.projectLibraryTitle,
+    description: t.trust.projectLibraryDesc,
   },
 ];
 
 export function TrustSection() {
+  const { t } = useLanguage();
+  const trustBlocks = getTrustBlocks(t);
   return (
     <section className="relative py-20 px-6">
       {/* Background */}
       <div className="absolute inset-0 bg-anarchy-dark" />
-      <div className="absolute inset-0 grid-pattern opacity-[0.03]" />
 
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Section Header */}
@@ -36,10 +38,10 @@ export function TrustSection() {
           className="text-center mb-12"
         >
           <span className="text-anarchy-red text-sm font-medium uppercase tracking-widest mb-3 block">
-            Why Anarchy AI
+            {t.trust.badge}
           </span>
           <h2 className="text-2xl md:text-3xl font-bold text-white">
-            Built for production workflows
+            {t.trust.title}
           </h2>
         </motion.div>
 

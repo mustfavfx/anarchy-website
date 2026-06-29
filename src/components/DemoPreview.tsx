@@ -1,35 +1,38 @@
 import { motion } from 'framer-motion';
 import { Upload, GitBranch, Layers, Save, Play } from 'lucide-react';
 import { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
-const steps = [
+const getSteps = (t: any) => [
   {
     icon: Upload,
-    title: 'Import',
-    description: 'Upload architectural screenshot or CAD render',
-    image: '/screenshots/builder.png',
+    title: t.demo.step1.title,
+    description: t.demo.step1.body,
+    image: 'https://placehold.co/600x400/1a1a1e/E63030?text=Import+Step',
   },
   {
     icon: GitBranch,
-    title: 'Connect',
-    description: 'Link AI engine nodes to your source image',
-    image: '/screenshots/projects.png',
+    title: t.demo.step2.title,
+    description: t.demo.step2.body,
+    image: 'https://placehold.co/600x400/1a1a1e/E63030?text=Connect+Step',
   },
   {
     icon: Layers,
-    title: 'Generate',
-    description: 'Batch render multiple directions in parallel',
-    image: '/screenshots/library.png',
+    title: t.demo.step3.title,
+    description: t.demo.step3.body,
+    image: 'https://placehold.co/600x400/1a1a1e/E63030?text=Generate+Step',
   },
   {
     icon: Save,
-    title: 'Export',
-    description: 'Compare, upscale, and save to project library',
-    image: '/screenshots/dashboard.png',
+    title: t.demo.step4.title,
+    description: t.demo.step4.body,
+    image: 'https://placehold.co/600x400/1a1a1e/E63030?text=Export+Step',
   },
 ];
 
 export function DemoPreview() {
+  const { t } = useLanguage();
+  const steps = getSteps(t);
   const [activeStep, setActiveStep] = useState(0);
   const [showVideoPlaceholder, setShowVideoPlaceholder] = useState(false);
 
@@ -37,7 +40,13 @@ export function DemoPreview() {
     <section id="demo" className="relative py-24 px-6">
       {/* Background */}
       <div className="absolute inset-0 bg-anarchy-dark" />
-      <div className="absolute inset-0 grid-pattern opacity-[0.03]" />
+      {/* Smooth fade transition from Hero section - Extended gradient */}
+      <div
+        className="absolute -top-48 left-0 right-0 h-48 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(10,10,12,0) 0%, rgba(10,10,12,0.3) 40%, rgba(10,10,12,0.7) 70%, #0a0a0c 100%)'
+        }}
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Section Header */}
@@ -49,13 +58,13 @@ export function DemoPreview() {
           className="text-center mb-16"
         >
           <span className="text-anarchy-red text-sm font-medium uppercase tracking-widest mb-3 block">
-            Product Walkthrough
+            {t.demo.badge}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            See the Workflow in Action
+            {t.demo.title}
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            A 60-second overview of how architects use Anarchy AI to transform design screenshots into client-ready renders.
+            {t.demo.description}
           </p>
         </motion.div>
 

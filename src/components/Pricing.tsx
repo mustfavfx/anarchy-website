@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Coins, CreditCard, Wallet, Globe, Check, 
-  Landmark, ArrowRight, Shield,
-  Sparkles
+  Coins, CreditCard, Check, 
+  Shield, Sparkles
 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface CreditPackage {
   id: string;
@@ -12,65 +12,44 @@ interface CreditPackage {
   credits: number;
   bonus: number;
   popular?: boolean;
+  isCustom?: boolean;
 }
 
 const creditPackages: CreditPackage[] = [
-  { id: 'starter', amount: 5, credits: 525, bonus: 0 },
-  { id: 'basic', amount: 10, credits: 1050, bonus: 0 },
-  { id: 'pro', amount: 20, credits: 2150, bonus: 50, popular: true },
-  { id: 'business', amount: 50, credits: 5500, bonus: 200 },
-  { id: 'enterprise', amount: 100, credits: 11500, bonus: 500 },
-  { id: 'mega', amount: 1000, credits: 125000, bonus: 10000 },
+  { id: 'starter', amount: 10, credits: 100, bonus: 5, popular: false },    // 105 total
+  { id: 'basic', amount: 20, credits: 200, bonus: 15, popular: true },       // 215 total  
+  { id: 'pro', amount: 50, credits: 500, bonus: 50, popular: false },       // 550 total
+  { id: 'business', amount: 100, credits: 1000, bonus: 150, popular: false }, // 1,150 total
+  { id: 'mega', amount: 1000, credits: 10000, bonus: 2000, popular: false },  // 12,000 total
+  { id: 'custom', amount: 0, credits: 0, bonus: 0, popular: false, isCustom: true },  // Custom amount ($5+)
 ];
 
 const generationCosts = [
-  { name: 'Standard (flux-schnell)', cost: 3, description: 'Fast generation' },
-  { name: 'HD (flux-dev)', cost: 25, description: 'High quality' },
-  { name: '4K (flux-1.1-pro)', cost: 40, description: 'Ultra HD' },
-  { name: 'Premium (ideogram-v3)', cost: 90, description: 'Best quality' },
-  { name: 'Video 480p', cost: 90, description: 'Per second' },
-  { name: 'Video 720p', cost: 250, description: 'Per second' },
-  { name: 'Upscale', cost: 5, description: 'Enhance resolution' },
+  { name: 'FLUX 2 Pro', cost: 1, description: 'High quality' },
+  { name: 'Seedream 4.5', cost: 1, description: 'Standard quality' },
+  { name: 'GPT Image 2 (low)', cost: 1, description: 'Standard resolution' },
+  { name: 'GPT Image 2 (high)', cost: 2, description: 'High resolution' },
+  { name: 'Nano Banana 2 (4K)', cost: 3, description: 'Ultra HD' },
+  { name: 'Video 480p/sec', cost: 14, description: 'Per second' },
+  { name: 'Video 720p/sec', cost: 38, description: 'Per second' },
+  { name: 'Upscale', cost: 2, description: 'Enhance resolution' },
 ];
 
 const paymentMethods = [
   { 
-    id: 'zaincash', 
-    name: 'Zain Cash', 
-    icon: Wallet, 
-    color: 'from-yellow-500 to-yellow-600',
-    description: 'Iraqi mobile wallet',
-    available: true
-  },
-  { 
-    id: 'card', 
-    name: 'Credit Card', 
-    icon: CreditCard, 
-    color: 'from-blue-500 to-blue-600',
-    description: 'Visa, Mastercard',
-    available: true
-  },
-  { 
     id: 'stripe', 
     name: 'Stripe', 
-    icon: Globe, 
-    color: 'from-purple-500 to-purple-600',
-    description: 'Global payments',
-    available: true
-  },
-  { 
-    id: 'bank', 
-    name: 'Bank Transfer', 
-    icon: Landmark, 
-    color: 'from-green-500 to-green-600',
-    description: 'Wire transfer',
+    icon: CreditCard, 
+    color: 'from-blue-500 to-blue-600',
+    description: 'Visa, Mastercard, Apple Pay',
     available: true
   },
 ];
 
 export const Pricing = () => {
+  const { t } = useLanguage();
   const [selectedPackage, setSelectedPackage] = useState<string>('pro');
-  const [selectedPayment, setSelectedPayment] = useState<string>('card');
+  const [selectedPayment, setSelectedPayment] = useState<string>('stripe');
   const [activeTab, setActiveTab] = useState<'packages' | 'costs'>('packages');
 
   return (
@@ -89,13 +68,13 @@ export const Pricing = () => {
         >
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-sm mb-6">
             <Sparkles size={16} />
-            Flexible Pricing
+            {t.pricing.badge}
           </span>
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-            Pay As You Go
+            {t.pricing.title}
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            No monthly subscriptions. Purchase credits and use them whenever you need.
+            {t.pricing.subtitle}
           </p>
         </motion.div>
 
@@ -110,7 +89,7 @@ export const Pricing = () => {
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              Credit Packages
+              {t.pricing.creditPackages}
             </button>
             <button
               onClick={() => setActiveTab('costs')}
@@ -120,7 +99,7 @@ export const Pricing = () => {
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              Generation Costs
+              {t.pricing.generationCosts}
             </button>
           </div>
         </div>
@@ -133,7 +112,7 @@ export const Pricing = () => {
             className="space-y-8"
           >
             {/* Packages Grid */}
-            <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {creditPackages.map((pkg, index) => (
                 <motion.div
                   key={pkg.id}
@@ -153,20 +132,34 @@ export const Pricing = () => {
                   {pkg.popular && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                       <span className="bg-anarchy-red text-white text-xs px-3 py-1 rounded-full">
-                        Popular
+                        {t.pricing.popular}
                       </span>
                     </div>
                   )}
                   
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-white mb-1">${pkg.amount}</div>
-                    <div className="text-sm text-gray-400 mb-3">
-                      {pkg.credits.toLocaleString()} Credits
-                    </div>
-                    {pkg.bonus > 0 && (
-                      <div className="text-xs text-anarchy-red">
-                        +{pkg.bonus} Bonus
-                      </div>
+                    {pkg.isCustom ? (
+                      <>
+                        <div className="text-xl font-bold text-white mb-1">{t.pricing.custom}</div>
+                        <div className="text-sm text-gray-400 mb-3">
+                          {t.pricing.anyAmount}
+                        </div>
+                        <div className="text-xs text-anarchy-red">
+                          $5 {t.pricing.minimum}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-2xl font-bold text-white mb-1">${pkg.amount}</div>
+                        <div className="text-sm text-gray-400 mb-3">
+                          {pkg.credits.toLocaleString()} {t.pricing.credits}
+                        </div>
+                        {pkg.bonus > 0 && (
+                          <div className="text-xs text-anarchy-red">
+                            +{pkg.bonus} {t.pricing.bonus}
+                          </div>
+                        )}
+                      </>
                     )}
                   </div>
 
@@ -193,18 +186,40 @@ export const Pricing = () => {
                     <Coins size={32} className="text-white" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-white">
-                      {creditPackages.find(p => p.id === selectedPackage)?.credits.toLocaleString()} Credits
-                    </h3>
-                    <p className="text-gray-400">Package: {selectedPackage}</p>
+                    {creditPackages.find(p => p.id === selectedPackage)?.isCustom ? (
+                      <>
+                        <h3 className="text-2xl font-bold text-white">
+                          Custom Amount
+                        </h3>
+                        <p className="text-gray-400">Enter your desired credits ($5+)</p>
+                      </>
+                    ) : (
+                      <>
+                        <h3 className="text-2xl font-bold text-white">
+                          {creditPackages.find(p => p.id === selectedPackage)?.credits.toLocaleString()} Credits
+                        </h3>
+                        <p className="text-gray-400">Package: {selectedPackage}</p>
+                      </>
+                    )}
                   </div>
                 </div>
 
                 <div className="text-center md:text-right">
-                  <div className="text-3xl font-bold text-white">
-                    ${creditPackages.find(p => p.id === selectedPackage)?.amount}
-                  </div>
-                  <p className="text-gray-400">One-time payment</p>
+                  {creditPackages.find(p => p.id === selectedPackage)?.isCustom ? (
+                    <>
+                      <div className="text-2xl font-bold text-white">
+                        $5+
+                      </div>
+                      <p className="text-gray-400">{t.pricing.minimum}</p>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-3xl font-bold text-white">
+                        ${creditPackages.find(p => p.id === selectedPackage)?.amount}
+                      </div>
+                      <p className="text-gray-400">{t.pricing.oneTimePayment}</p>
+                    </>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -238,15 +253,9 @@ export const Pricing = () => {
                 ))}
               </div>
 
-              <div className="mt-6 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-gray-400 text-sm">
-                  <Shield size={16} />
-                  Secure SSL encryption
-                </div>
-                <button className="bg-gradient-to-r from-anarchy-red to-red-600 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-[0_0_30px_rgba(225,29,72,0.3)] transition-all flex items-center gap-2">
-                  Purchase Now
-                  <ArrowRight size={18} />
-                </button>
+              <div className="mt-6 flex items-center gap-2 text-gray-400 text-sm">
+                <Shield size={16} />
+                Secure SSL encryption
               </div>
             </div>
           </motion.div>

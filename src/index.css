@@ -235,3 +235,183 @@ body {
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
 }
+
+/* ========================================
+   ANARCHY AI CUSTOM SCROLLBAR
+   Distinctive brand identity scrollbar
+   ======================================== */
+
+/* Webkit Scrollbar (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track - Dark architectural background */
+::-webkit-scrollbar-track {
+  background: #0a0a0c;
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Thumb - Anarchy Red gradient */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #e63030 0%,
+    #c41e3a 50%,
+    #9f1239 100%
+  );
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 10px rgba(230, 48, 48, 0.3);
+}
+
+/* Thumb Hover - Intense glow */
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #ff4444 0%,
+    #e63030 50%,
+    #be185d 100%
+  );
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(230, 48, 48, 0.6),
+    0 0 40px rgba(230, 48, 48, 0.3);
+}
+
+/* Thumb Active - Click state */
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(
+    180deg,
+    #ff5555 0%,
+    #ff3333 100%
+  );
+}
+
+/* Corner */
+::-webkit-scrollbar-corner {
+  background: #0a0a0c;
+}
+
+/* Firefox Scrollbar - Vertical only */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #e63030 #0a0a0c;
+}
+
+/* Hide horizontal scrollbar */
+::-webkit-scrollbar:horizontal {
+  display: none;
+}
+
+/* Prevent horizontal overflow on body */
+html, body {
+  overflow-x: hidden;
+}
+
+/* ========================================
+   ANARCHY AI CUSTOM CURSOR
+   Red circle with glow effect
+   ======================================== */
+
+/* Custom cursor for desktop */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+  
+  body {
+    cursor: none !important;
+  }
+}
+
+/* Custom cursor element styles */
+.cursor-dot {
+  width: 12px;
+  height: 12px;
+  background: #e63030;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  box-shadow: 
+    0 0 10px #e63030,
+    0 0 20px #e63030,
+    0 0 30px rgba(230, 48, 48, 0.5);
+  transition: transform 0.1s ease;
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(230, 48, 48, 0.6);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease-out;
+  box-shadow: 
+    0 0 15px rgba(230, 48, 48, 0.3),
+    inset 0 0 15px rgba(230, 48, 48, 0.1);
+}
+
+/* Hover states */
+.cursor-hover .cursor-dot {
+  transform: translate(-50%, -50%) scale(1.5);
+  background: #ff4444;
+  box-shadow: 
+    0 0 15px #ff4444,
+    0 0 30px #ff4444,
+    0 0 45px rgba(255, 68, 68, 0.6);
+}
+
+.cursor-hover .cursor-ring {
+  transform: translate(-50%, -50%) scale(1.3);
+  border-color: rgba(255, 68, 68, 0.8);
+  box-shadow: 
+    0 0 20px rgba(255, 68, 68, 0.5),
+    inset 0 0 20px rgba(255, 68, 68, 0.2);
+}
+
+/* Click animation */
+.cursor-click .cursor-dot {
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.cursor-click .cursor-ring {
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+/* Scrollbar Animation - Pulse effect on page load */
+@keyframes scrollbar-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Custom scrollbar progress indicator at top */
+.scroll-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  z-index: 9999;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #e63030 0%,
+    #ff6b6b 50%,
+    #e63030 100%
+  );
+  box-shadow: 0 0 10px rgba(230, 48, 48, 0.8);
+  transform-origin: left;
+}

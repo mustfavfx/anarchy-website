@@ -1,44 +1,48 @@
 import { motion } from 'framer-motion';
 import { Upload, Cpu, Sliders, Download } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
-const steps = [
+const getSteps = (t: any) => [
   {
     icon: Upload,
     step: '01',
-    title: 'Import Your Scene',
-    body: 'Connect 3ds Max, Revit, or AutoCAD via our native plugin. Or drop any reference image directly onto the canvas.',
+    title: t.workflow.step1.title,
+    body: t.workflow.step1.body,
     color: 'from-blue-500/20 to-cyan-500/10',
     iconColor: 'text-blue-400',
   },
   {
     icon: Cpu,
     step: '02',
-    title: 'Build Your Node Graph',
-    body: 'Chain AI nodes together — upscaler, renderer, style transfer, inpainter. Design your own pipeline or start from a preset.',
+    title: t.workflow.step2.title,
+    body: t.workflow.step2.body,
     color: 'from-purple-500/20 to-violet-500/10',
     iconColor: 'text-purple-400',
   },
   {
     icon: Sliders,
     step: '03',
-    title: 'Tune & Batch Generate',
-    body: 'Adjust prompts, engine settings, and resolution per node. Hit Generate and let all variations run in parallel.',
+    title: t.workflow.step3.title,
+    body: t.workflow.step3.body,
     color: 'from-anarchy-red/20 to-orange-500/10',
     iconColor: 'text-anarchy-red',
   },
   {
     icon: Download,
     step: '04',
-    title: 'Export & Present',
-    body: 'Export full-resolution renders, switch to Client Mode for presentations, or sync outputs back to your 3D file.',
+    title: t.workflow.step4.title,
+    body: t.workflow.step4.body,
     color: 'from-green-500/20 to-emerald-500/10',
     iconColor: 'text-green-400',
   },
 ];
 
 export function WorkflowSection() {
+  const { t } = useLanguage();
+  const steps = getSteps(t);
+  
   return (
-    <section id="workflow" className="py-28 px-6 relative" aria-labelledby="workflow-heading">
+    <section id="workflow" className="py-16 md:py-28 px-4 md:px-6 relative" aria-labelledby="workflow-heading">
       <div className="absolute inset-0 bg-gradient-to-b from-anarchy-dark via-anarchy-gray/40 to-anarchy-dark" />
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -50,16 +54,16 @@ export function WorkflowSection() {
           className="text-center mb-20"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-xs font-medium tracking-wide mb-5">
-            How It Works
+            {t.workflow.badge}
           </span>
           <h2 id="workflow-heading" className="text-headline text-white mb-4">
-            From Reference to Final Render{' '}
+            {t.workflow.title}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-anarchy-red to-red-400">
-              in Minutes
+              {t.workflow.highlight}
             </span>
           </h2>
           <p className="text-gray-400 text-lg max-w-xl mx-auto">
-            A four-step workflow that replaces days of manual rendering iteration.
+            {t.workflow.description}
           </p>
         </motion.div>
 

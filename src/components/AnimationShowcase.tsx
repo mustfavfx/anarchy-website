@@ -184,7 +184,6 @@ export function AnimationShowcase() {
       <ScrollProgress />
       
       <div className="absolute inset-0 bg-anarchy-dark" />
-      <div className="absolute inset-0 grid-pattern opacity-[0.03]" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div

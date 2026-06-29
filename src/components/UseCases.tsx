@@ -1,36 +1,39 @@
 import { motion } from 'framer-motion';
 import { Building2, Presentation, Users, Briefcase } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
-const cases = [
+const getCases = (t: any) => [
   {
     icon: Building2,
-    title: 'Design Development',
-    body: 'Generate dozens of render variations per design phase. Explore materials, lighting, and massing instantly without waiting for the render farm.',
-    tags: ['Batch Render', 'Style Exploration', 'Fast Iteration'],
+    title: t.useCases.designDevelopment,
+    body: t.useCases.case1Body,
+    tags: [t.useCases.batchRender, t.useCases.styleExploration, t.useCases.fastIteration],
   },
   {
     icon: Presentation,
-    title: 'Client Presentations',
-    body: 'Switch to Client Mode and present polished AI renders directly in the app. No Photoshop, no post-processing — just clean architectural visuals.',
-    tags: ['Client Mode', 'Presentation Ready', 'HD Export'],
+    title: t.useCases.clientPresentations,
+    body: t.useCases.case2Body,
+    tags: [t.useCases.clientMode, t.useCases.presentationTag, t.useCases.hdExport],
   },
   {
     icon: Users,
-    title: 'Design Competitions',
-    body: 'Produce competition-grade visualizations in hours. Combine multiple AI engines for photorealistic exteriors, dramatic night scenes, and atmospheric moods.',
-    tags: ['Competition Grade', 'Multi-Engine', 'Mood Boards'],
+    title: t.useCases.case3Title,
+    body: t.useCases.case3Body,
+    tags: [t.useCases.competitionGrade, t.useCases.multiEngine, t.useCases.moodBoards],
   },
   {
     icon: Briefcase,
-    title: 'Developer Marketing',
-    body: 'Create marketing renders for off-plan properties and developer portfolios. Feed reference images from Revit and export ready-to-use marketing visuals.',
-    tags: ['Revit Integration', 'Marketing Ready', 'Off-Plan'],
+    title: t.useCases.case4Title,
+    body: t.useCases.case4Body,
+    tags: [t.useCases.revitIntegration, t.useCases.marketingReady, t.useCases.offPlan],
   },
 ];
 
 export function UseCases() {
+  const { t } = useLanguage();
+  const cases = getCases(t);
   return (
-    <section id="usecases" className="py-28 px-6 relative" aria-labelledby="usecases-heading">
+    <section id="usecases" className="py-16 md:py-28 px-4 md:px-6 relative" aria-labelledby="usecases-heading">
       <div className="absolute inset-0 bg-anarchy-dark" />
       <div
         className="absolute inset-0 opacity-20"
@@ -48,16 +51,16 @@ export function UseCases() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-xs font-medium tracking-wide mb-5">
-            Use Cases
+            {t.useCases.badge}
           </span>
           <h2 id="usecases-heading" className="text-headline text-white mb-4">
-            Built for{' '}
+            {t.useCases.title}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-anarchy-red to-red-400">
-              Real Architectural Work
+              {t.useCases.highlight}
             </span>
           </h2>
           <p className="text-gray-400 text-lg max-w-xl mx-auto">
-            Whether you're a solo architect or running a large studio, Anarchy AI adapts to your workflow.
+            {t.useCases.description}
           </p>
         </motion.div>
 

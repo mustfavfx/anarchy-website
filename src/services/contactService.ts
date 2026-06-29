@@ -1,7 +1,10 @@
 /**
  * Contact Service
- * Handles contact form submissions via Supabase
+ * Handles contact form submissions via EmailJS
+ * Sends emails directly to anarchy.lat@gmail.com
  */
+
+import emailjs from '@emailjs/browser';
 
 export interface ContactSubmission {
   name: string;
@@ -17,9 +20,14 @@ export interface ContactResponse {
   storedLocally?: boolean;
 }
 
+// EmailJS Configuration
+const EMAILJS_SERVICE_ID = 'service_lq3e769';
+const EMAILJS_TEMPLATE_ID = 'template_1eta83h';
+const EMAILJS_PUBLIC_KEY = 'XFWWLNuDKLiB9cf5c';
+
 /**
  * Submit contact form
- * Supports Supabase webhook URL from env or localStorage fallback
+ * Sends email via EmailJS (works immediately)
  */
 export async function submitContactForm(
   name: string,
@@ -58,62 +66,52 @@ export async function submitContactForm(
     createdAt: new Date().toISOString(),
   };
 
-  // Supabase Edge Function URL
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  // Send via EmailJS
+  try {
+    const templateParams = {
+      from_name: submission.name,
+      from_email: submission.email,
+      message: submission.message,
+    };
 
-  // If Supabase credentials exist, try to POST there
-  if (supabaseUrl && supabaseAnonKey) {
-    try {
-      const response = await fetch(
-        `${supabaseUrl}/functions/v1/contact-form`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${supabaseAnonKey}`,
-          },
-          body: JSON.stringify(submission),
-        }
-      );
+    await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      templateParams,
+      EMAILJS_PUBLIC_KEY
+    );
 
-      if (response.ok) {
-        // Also store locally as backup
-        const existingMessages = JSON.parse(
-          localStorage.getItem('contact_messages') || '[]'
-        );
-        existingMessages.push(submission);
-        localStorage.setItem('contact_messages', JSON.stringify(existingMessages));
+    // Store locally as backup
+    const existingMessages = JSON.parse(
+      localStorage.getItem('contact_messages') || '[]'
+    );
+    existingMessages.push(submission);
+    localStorage.setItem('contact_messages', JSON.stringify(existingMessages));
 
-        return {
-          success: true,
-          message: 'Message sent successfully! We will get back to you soon.',
-        };
-      } else {
-        throw new Error(`Supabase returned ${response.status}`);
-      }
-    } catch (error) {
-      console.warn('[Contact] Supabase failed, falling back to localStorage:', error);
-      // Fall through to localStorage fallback
-    }
+    return {
+      success: true,
+      message: 'Message sent successfully! We will get back to you soon.',
+    };
+  } catch (error) {
+    console.error('[Contact] EmailJS failed:', error);
+    
+    // Show actual error to user
+    const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error details:', errorMsg);
+    
+    // Store locally
+    const existingMessages = JSON.parse(
+      localStorage.getItem('contact_messages') || '[]'
+    );
+    existingMessages.push(submission);
+    localStorage.setItem('contact_messages', JSON.stringify(existingMessages));
+
+    return {
+      success: false,
+      message: `Email failed: ${errorMsg}. Please email us directly at anarchy.lat@gmail.com`,
+      storedLocally: true,
+    };
   }
-
-  // Fallback: store locally
-  const existingMessages = JSON.parse(
-    localStorage.getItem('contact_messages') || '[]'
-  );
-  existingMessages.push(submission);
-  localStorage.setItem('contact_messages', JSON.stringify(existingMessages));
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn('Supabase credentials missing. Stored locally only.');
-  }
-
-  return {
-    success: true,
-    message: 'Message received! We will get back to you via email.',
-    storedLocally: true,
-  };
 }
 
 /**

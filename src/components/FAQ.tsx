@@ -1,40 +1,22 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
-const faqs = [
-  {
-    q: 'Is Anarchy AI free to use?',
-    a: 'The app is free to download and use. You pay only for AI generation credits. Credits never expire and there are no monthly fees.',
-  },
-  {
-    q: 'Does it work without an internet connection?',
-    a: 'The core application runs offline via Tauri. An internet connection is only needed when you trigger AI generation to send requests to the AI engine APIs.',
-  },
-  {
-    q: 'Which 3D software is supported?',
-    a: '3ds Max, Revit, and AutoCAD are currently available via native plugins. SketchUp and ArchiCAD support is coming soon.',
-  },
-  {
-    q: 'What AI engines are included?',
-    a: 'Anarchy AI currently supports GPT Image 2, FLUX 2 Pro, Seedream 4.5, Grok Imagine, Nano Banana 2, and more. New engines are added regularly.',
-  },
-  {
-    q: 'Can I batch process multiple renders at once?',
-    a: 'Yes. You can queue unlimited render variations across your node graph. Each node can target a different engine, resolution, or prompt — all running in parallel.',
-  },
-  {
-    q: 'How is this different from Midjourney or Stable Diffusion?',
-    a: 'Anarchy AI is a workflow platform, not just an image generator. It integrates directly with your 3D tools, lets you build reusable pipelines, and manages your entire render library — not just individual prompts.',
-  },
-  {
-    q: 'What operating systems are supported?',
-    a: 'Currently Windows 10/11 is fully supported. macOS support is in active development.',
-  },
+const getFaqs = (t: any) => [
+  { q: t.faq.q1, a: t.faq.a1 },
+  { q: t.faq.q2, a: t.faq.a2 },
+  { q: t.faq.q3, a: t.faq.a3 },
+  { q: t.faq.q4, a: t.faq.a4 },
+  { q: t.faq.q5, a: t.faq.a5 },
+  { q: t.faq.q6, a: t.faq.a6 },
+  { q: t.faq.q7, a: t.faq.a7 },
 ];
 
 export function FAQ() {
+  const { t } = useLanguage();
   const [open, setOpen] = useState<number | null>(0);
+  const faqs = getFaqs(t);
 
   return (
     <section id="faq" className="py-28 px-6 relative" aria-labelledby="faq-heading">
@@ -49,13 +31,13 @@ export function FAQ() {
           className="text-center mb-14"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-xs font-medium tracking-wide mb-5">
-            FAQ
+            {t.faq.badge}
           </span>
           <h2 id="faq-heading" className="text-headline text-white mb-4">
-            Common Questions
+            {t.faq.title}
           </h2>
           <p className="text-gray-400 text-lg">
-            Everything you need to know before getting started.
+            {t.faq.subtitle}
           </p>
         </motion.div>
 

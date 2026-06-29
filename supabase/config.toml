@@ -1,0 +1,5 @@
+# Supabase Configuration
+project_id = "your-project-id"
+
+[functions.send-contact-email]
+verify_jwt = false

@@ -104,7 +104,6 @@ export function Testimonials() {
         }}
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
       />
-      <div className="absolute inset-0 grid-pattern opacity-[0.03]" />
 
       {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

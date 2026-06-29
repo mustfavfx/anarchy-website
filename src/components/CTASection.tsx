@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Check, Loader2, Mail, User, MessageSquare } from 'lucide-react';
 import { submitContactForm } from '../services/contactService';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export function CTASection() {
+  const { t } = useLanguage();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -51,7 +53,6 @@ export function CTASection() {
           backgroundImage: `radial-gradient(ellipse 70% 60% at 50% 100%, rgba(230,48,48,0.14) 0%, transparent 60%)`,
         }}
       />
-      <div className="absolute inset-0 grid-pattern opacity-[0.03]" />
 
       <div className="max-w-2xl mx-auto relative z-10">
         <motion.div
@@ -62,18 +63,15 @@ export function CTASection() {
           className="text-center"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-anarchy-red/10 border border-anarchy-red/20 text-anarchy-red text-xs font-medium tracking-wide mb-6">
-            Get in Touch
+            {t.contact.badge}
           </span>
 
           <h2 id="contact-heading" className="text-headline text-white mb-5">
-            Contact{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-anarchy-red to-red-400">
-              Us
-            </span>
+            {t.contact.title}
           </h2>
 
           <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-            Have questions or feedback? Send us a message and we will get back to you as soon as possible.
+            {t.contact.subtitle}
           </p>
 
           {status === 'done' ? (
@@ -104,7 +102,7 @@ export function CTASection() {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Your Name"
+                    placeholder={t.contact.namePlaceholder}
                     disabled={status === 'loading'}
                     minLength={2}
                     className="w-full bg-white/[0.05] border border-white/[0.1] rounded-xl pl-12 pr-4 py-3.5 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-anarchy-red/50 focus:ring-1 focus:ring-anarchy-red/30 disabled:opacity-50 transition-all"
@@ -123,7 +121,7 @@ export function CTASection() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
+                    placeholder={t.contact.emailPlaceholder}
                     disabled={status === 'loading'}
                     className="w-full bg-white/[0.05] border border-white/[0.1] rounded-xl pl-12 pr-4 py-3.5 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-anarchy-red/50 focus:ring-1 focus:ring-anarchy-red/30 disabled:opacity-50 transition-all"
                   />
@@ -140,7 +138,7 @@ export function CTASection() {
                     required
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Your message..."
+                    placeholder={t.contact.messagePlaceholder}
                     disabled={status === 'loading'}
                     minLength={10}
                     rows={4}
@@ -160,7 +158,7 @@ export function CTASection() {
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
                   <>
-                    Send Message
+                    {t.contact.sendMessage}
                     <Send size={15} />
                   </>
                 )}
@@ -169,15 +167,8 @@ export function CTASection() {
           )}
 
           {status === 'error' && (
-            <p className="mt-3 text-sm text-red-400">{statusMessage || 'Something went wrong. Please try again.'}</p>
+            <p className="mt-3 text-sm text-red-400">{statusMessage || t.contact.error}</p>
           )}
-
-          <p className="mt-5 text-xs text-gray-600">
-            Your message will be sent to{' '}
-            <a href="mailto:anarchy.lat@gmail.com" className="text-anarchy-red hover:underline">
-              anarchy.lat@gmail.com
-            </a>
-          </p>
         </motion.div>
       </div>
     </section>

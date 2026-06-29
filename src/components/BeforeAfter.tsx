@@ -1,15 +1,18 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Sun, Palette, Sparkles, Maximize2 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
-const tags = [
-  { icon: Sun, label: 'Lighting Match' },
-  { icon: Palette, label: 'Material Refinement' },
-  { icon: Sparkles, label: 'Mood Transfer' },
-  { icon: Maximize2, label: 'Upscale Ready' },
+const getTags = (t: any) => [
+  { icon: Sun, label: t.beforeAfter.lightingMatch },
+  { icon: Palette, label: t.beforeAfter.materialRefinement },
+  { icon: Sparkles, label: t.beforeAfter.moodTransfer },
+  { icon: Maximize2, label: t.beforeAfter.upscaleReady },
 ];
 
 export function BeforeAfter() {
+  const { t } = useLanguage();
+  const tags = getTags(t);
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -34,7 +37,7 @@ export function BeforeAfter() {
   };
 
   return (
-    <section className="relative py-24 px-6 overflow-hidden">
+    <section className="relative py-16 md:py-24 px-4 md:px-6 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-anarchy-dark" />
       <div
@@ -43,7 +46,6 @@ export function BeforeAfter() {
           backgroundImage: `radial-gradient(ellipse 80% 50% at 50% 100%, rgba(230,48,48,0.08) 0%, transparent 60%)`,
         }}
       />
-      <div className="absolute inset-0 grid-pattern opacity-[0.03]" />
 
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Section Header */}
@@ -55,13 +57,13 @@ export function BeforeAfter() {
           className="text-center mb-12"
         >
           <span className="text-anarchy-red text-sm font-medium uppercase tracking-widest mb-3 block">
-            Transformation
+            {t.beforeAfter.badge}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            From Raw Screenshot to Client-Ready Render
+            {t.beforeAfter.title}
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Upload any architectural visualization and apply AI-powered lighting, materials, and mood adjustments.
+            {t.beforeAfter.description}
           </p>
         </motion.div>
 
@@ -87,14 +89,14 @@ export function BeforeAfter() {
             {/* After Image (Full) */}
             <div className="absolute inset-0">
               <img
-                src="/screenshots/builder.png"
+                src="/screenshots/classic-after.jpg"
                 alt="AI-enhanced architectural render with refined lighting and materials"
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
               {/* Label */}
               <div className="absolute top-4 right-4 glass px-3 py-1.5 rounded-lg">
-                <span className="text-xs font-medium text-white">AI Enhanced</span>
+                <span className="text-xs font-medium text-white">{t.beforeAfter.aiEnhanced}</span>
               </div>
             </div>
 
@@ -104,14 +106,14 @@ export function BeforeAfter() {
               style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
             >
               <img
-                src="/screenshots/projects.png"
+                src="/screenshots/classic-before.jpg"
                 alt="Raw architectural screenshot before AI enhancement"
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
               {/* Label */}
               <div className="absolute top-4 left-4 glass px-3 py-1.5 rounded-lg">
-                <span className="text-xs font-medium text-gray-300">Original</span>
+                <span className="text-xs font-medium text-gray-300">{t.beforeAfter.original}</span>
               </div>
             </div>
 
@@ -132,7 +134,7 @@ export function BeforeAfter() {
 
           {/* Instructions */}
           <p className="text-center text-xs text-gray-500 mt-4">
-            Drag slider to compare before and after
+            {t.beforeAfter.dragSlider}
           </p>
 
           {/* Tags */}

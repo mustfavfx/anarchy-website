@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Loader2, Globe } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { sendChatMessage } from '../services/chatService';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface Message {
   id: string;
@@ -16,6 +17,7 @@ const detectArabic = (text: string): boolean => {
 };
 
 export const ChatWidget = () => {
+  const { lang } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([
@@ -27,7 +29,6 @@ export const ChatWidget = () => {
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
-  const [language, setLanguage] = useState<'en' | 'ar'>('en');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -89,10 +90,6 @@ export const ChatWidget = () => {
     }
   };
 
-  const switchLanguage = () => {
-    setLanguage(prev => prev === 'en' ? 'ar' : 'en');
-  };
-
   return (
     <>
       {/* Chat Button */}
@@ -113,26 +110,19 @@ export const ChatWidget = () => {
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
             className="absolute bottom-20 right-0 w-[380px] max-w-[calc(100vw-2rem)] glass rounded-2xl shadow-2xl overflow-hidden border border-white/10"
-            style={{ direction: language === 'ar' ? 'rtl' : 'ltr' }}
+            style={{ direction: lang === 'ar' ? 'rtl' : 'ltr' }}
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-anarchy-red to-red-600 p-4">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-white font-semibold text-lg">
-                    {language === 'en' ? 'Anarchy AI Assistant' : 'مساعد Anarchy AI'}
+                    {lang === 'en' ? 'Anarchy AI Assistant' : 'مساعد Anarchy AI'}
                   </h3>
                   <p className="text-white/80 text-sm">
-                    {language === 'en' ? 'Ask me about the software' : 'اسألني عن البرنامج'}
+                    {lang === 'en' ? 'Ask me about the software' : 'اسألني عن البرنامج'}
                   </p>
                 </div>
-                <button
-                  onClick={switchLanguage}
-                  className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white/90"
-                  title={language === 'en' ? 'Switch to Arabic' : 'التبديل للإنجليزية'}
-                >
-                  <Globe size={18} />
-                </button>
               </div>
             </div>
 
@@ -169,7 +159,7 @@ export const ChatWidget = () => {
                   <div className="glass-card rounded-2xl rounded-bl-md p-3 flex items-center gap-2">
                     <Loader2 size={16} className="animate-spin text-anarchy-red" />
                     <span className="text-gray-400 text-sm">
-                      {language === 'en' ? 'Thinking...' : 'جاري التفكير...'}
+                      {lang === 'en' ? 'Thinking...' : 'جاري التفكير...'}
                     </span>
                   </div>
                 </div>
@@ -185,7 +175,7 @@ export const ChatWidget = () => {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder={language === 'en' ? 'Ask about Anarchy AI...' : 'اسأل عن Anarchy AI...'}
+                  placeholder={lang === 'en' ? 'Ask about Anarchy AI...' : 'اسأل عن Anarchy AI...'}
                   className="flex-1 bg-anarchy-dark border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-anarchy-red/50 transition-colors placeholder:text-gray-500"
                   disabled={isLoading}
                   dir="auto"

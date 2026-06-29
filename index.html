@@ -2,6 +2,99 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Automatically unregister service workers in development to prevent caching issues
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for (let registration of registrations) {
+              registration.unregister().then(function(wasUnregistered) {
+                if (wasUnregistered) {
+                  console.log('[Dev SW] Unregistered active service worker successfully');
+                  window.location.reload();
+                }
+              });
+            }
+          });
+        }
+    </script>
+    <script>
+      // Disable right-click context menu (only in production)
+      document.addEventListener('contextmenu', function(e) {
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+          e.preventDefault();
+        }
+      });
+
+      // Disable F12 and standard DevTools shortcuts (only in production)
+      document.addEventListener('keydown', function(e) {
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+          // F12
+          if (e.key === 'F12') {
+            e.preventDefault();
+          }
+          // Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J
+          if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J' || e.key === 'i' || e.key === 'c' || e.key === 'j')) {
+            e.preventDefault();
+          }
+          // Ctrl+U (View Source)
+          if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
+            e.preventDefault();
+          }
+        }
+      });
+    </script>
+    <script>
+      // Global error handler to catch and display any runtime or resource loading errors on screen
+      window.addEventListener('error', function(event) {
+        var target = event.target || event.srcElement;
+        var isElement = target instanceof HTMLElement;
+        var message = isElement ? 'Failed to load resource: ' + (target.src || target.href) : event.message;
+        
+        var errorDiv = document.createElement('div');
+        errorDiv.style.position = 'fixed';
+        errorDiv.style.top = '0';
+        errorDiv.style.left = '0';
+        errorDiv.style.width = '100%';
+        errorDiv.style.backgroundColor = '#E63030';
+        errorDiv.style.color = '#FFFFFF';
+        errorDiv.style.padding = '20px';
+        errorDiv.style.zIndex = '999999';
+        errorDiv.style.fontFamily = 'monospace';
+        errorDiv.style.fontSize = '14px';
+        errorDiv.style.whiteSpace = 'pre-wrap';
+        errorDiv.style.boxSizing = 'border-box';
+        
+        if (isElement) {
+          console.warn('[Resource Load Error]:', message);
+          return;
+        } else {
+          var error = event.error || {};
+          errorDiv.innerHTML = '<strong>[Runtime Error]:</strong> ' + event.message + '<br><small>in ' + event.filename + ' at line ' + event.lineno + ':' + event.colno + '</small>' + (error.stack ? '<br><br><strong>Stack Trace:</strong><br>' + error.stack : '');
+        }
+        document.documentElement.appendChild(errorDiv);
+      }, true); // capturing phase to catch resource errors
+      
+      window.addEventListener('unhandledrejection', function(event) {
+        var message = event.reason && event.reason.message ? event.reason.message : JSON.stringify(event.reason);
+        var stack = event.reason && event.reason.stack ? event.reason.stack : '';
+        var errorDiv = document.createElement('div');
+        errorDiv.style.position = 'fixed';
+        errorDiv.style.top = '0';
+        errorDiv.style.left = '0';
+        errorDiv.style.width = '100%';
+        errorDiv.style.backgroundColor = '#E63030';
+        errorDiv.style.color = '#FFFFFF';
+        errorDiv.style.padding = '20px';
+        errorDiv.style.zIndex = '999999';
+        errorDiv.style.fontFamily = 'monospace';
+        errorDiv.style.fontSize = '14px';
+        errorDiv.style.whiteSpace = 'pre-wrap';
+        errorDiv.style.boxSizing = 'border-box';
+        errorDiv.innerHTML = '<strong>[Unhandled Promise Rejection]:</strong> ' + message + (stack ? '<br><br><strong>Stack Trace:</strong><br>' + stack : '');
+        document.documentElement.appendChild(errorDiv);
+      });
+    </script>
     <link rel="icon" type="image/png" href="/logo.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,14 +113,14 @@
     <meta property="og:url" content="https://anarchy.lat/">
     <meta property="og:title" content="Anarchy AI — AI Render Workflow Platform for Architects">
     <meta property="og:description" content="Create reusable AI render workflows for architecture. Generate, upscale, compare, and manage visual directions.">
-    <meta property="og:image" content="https://anarchy.lat/screenshots/builder.png">
+    <meta property="og:image" content="https://placehold.co/1200x630/1a1a1e/E63030?text=Anarchy+AI">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://anarchy.lat/">
     <meta property="twitter:title" content="Anarchy AI — AI Render Workflow Platform for Architects">
     <meta property="twitter:description" content="Create reusable AI render workflows for architecture. Generate, upscale, compare, and manage visual directions.">
-    <meta property="twitter:image" content="https://anarchy.lat/screenshots/builder.png">
+    <meta property="twitter:image" content="https://placehold.co/1200x630/1a1a1e/E63030?text=Anarchy+AI">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://anarchy.lat/">
@@ -36,8 +129,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <!-- Typography: Inter for English, Tajawal for Arabic -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Typography: Inter for English, Tajawal/Noto Sans Arabic for Arabic, Bebas Neue for Logo -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
     
     <!-- Structured Data - Organization -->
     <script type="application/ld+json">
@@ -76,7 +169,7 @@
         "Project library with version history",
         "3D software integrations"
       ],
-      "screenshot": "https://anarchy.lat/screenshots/builder.png",
+      "screenshot": "https://placehold.co/1200x630/1a1a1e/E63030?text=Anarchy+AI",
       "offers": {
         "@type": "Offer",
         "name": "Pay-as-you-go Credits",
@@ -92,19 +185,19 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <!-- Google Analytics 4 - Add your actual GA4 ID here -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    </script> -->
     
     <!-- Plausible Analytics -->
     <script defer data-domain="anarchy.lat" src="https://plausible.io/js/script.js"></script>
     
-    <!-- Tidio Live Chat -->
-    <script src="//code.tidio.co/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.js" async></script>
+    <!-- Tidio Live Chat - Add your actual Tidio ID here -->
+    <!-- <script src="//code.tidio.co/YOUR_TIDIO_ID.js" async></script> -->
   </body>
 </html>
