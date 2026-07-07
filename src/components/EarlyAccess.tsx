@@ -1,20 +1,33 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Download, X, Monitor, Cpu, HardDrive, MemoryStick } from 'lucide-react'
+import { Download, X, Monitor, Cpu, HardDrive, MemoryStick, Loader2 } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
+
+const GITHUB_REPO = 'mustfavfx/Anarchy-ai';
 
 export default function DirectAccess() {
   const { t } = useLanguage()
   const [showRequirements, setShowRequirements] = useState(false)
+  const [downloading, setDownloading] = useState(false)
+  const [downloadError, setDownloadError] = useState<string | null>(null)
 
-  const handleDownload = () => {
-    // Direct download of the installer file from the public assets
-    const link = document.createElement('a');
-    link.href = '/Anarchy_AI_Setup.exe';
-    link.download = 'Anarchy_AI_Setup.exe';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleDownload = async () => {
+    setDownloading(true);
+    setDownloadError(null);
+    try {
+      const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/releases/latest`);
+      if (!res.ok) throw new Error('Could not fetch release info');
+      const data = await res.json();
+      const asset = data.assets?.find((a: { name: string }) =>
+        a.name.toLowerCase().endsWith('.exe') && a.name.toLowerCase().includes('setup')
+      );
+      if (!asset) throw new Error('Installer not found in latest release');
+      window.open(asset.browser_download_url, '_blank');
+    } catch (err: unknown) {
+      setDownloadError(err instanceof Error ? err.message : 'Download failed. Please try again.');
+    } finally {
+      setDownloading(false);
+    }
   }
 
   const systemRequirements = {
@@ -61,15 +74,16 @@ export default function DirectAccess() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <motion.button
                 onClick={handleDownload}
-                whileHover={{ scale: 1.02, x: 4 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative bg-anarchy-red text-white px-8 py-4 font-bold text-base tracking-wider uppercase overflow-hidden"
+                disabled={downloading}
+                whileHover={downloading ? {} : { scale: 1.02, x: 4 }}
+                whileTap={downloading ? {} : { scale: 0.98 }}
+                className="group relative bg-anarchy-red text-white px-8 py-4 font-bold text-base tracking-wider uppercase overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {/* Shimmer effect */}
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                {!downloading && <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />}
                 <span className="relative flex items-center gap-2">
-                  <Download size={18} />
-                  {t.download.downloadNow}
+                  {downloading ? <Loader2 size={18} className="animate-spin" /> : <Download size={18} />}
+                  {downloading ? 'Fetching latest...' : t.download.downloadNow}
                 </span>
               </motion.button>
 
@@ -93,6 +107,11 @@ export default function DirectAccess() {
                 {t.download.windows}
               </span>
             </div>
+
+            {/* Download error */}
+            {downloadError && (
+              <p className="mt-4 text-sm text-red-400">{downloadError}</p>
+            )}
           </div>
         </motion.div>
       </div>
