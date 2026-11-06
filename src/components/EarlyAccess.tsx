@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Download, X, Monitor, Cpu, HardDrive, MemoryStick, Loader2 } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
 
-const GITHUB_REPO = 'mustfavfx/Anarchy-ai';
+const GITHUB_REPO = 'mustfavfx/Anarchy-ai-releases';
 
 export default function DirectAccess() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [showRequirements, setShowRequirements] = useState(false)
   const [downloading, setDownloading] = useState(false)
   const [downloadError, setDownloadError] = useState<string | null>(null)
@@ -22,7 +22,7 @@ export default function DirectAccess() {
         a.name.toLowerCase().endsWith('.exe') && a.name.toLowerCase().includes('setup')
       );
       if (!asset) throw new Error('Installer not found in latest release');
-      window.open(asset.browser_download_url, '_blank');
+      window.location.assign(asset.browser_download_url);
     } catch (err: unknown) {
       setDownloadError(err instanceof Error ? err.message : 'Download failed. Please try again.');
     } finally {
@@ -68,6 +68,12 @@ export default function DirectAccess() {
 
             <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
               {t.download.description}
+            </p>
+
+            <p className="text-gray-300 text-sm mb-6 max-w-xl mx-auto leading-relaxed">
+              {lang === 'ar'
+                ? 'إذا لم يعمل التحديث التلقائي في نسختك الحالية، حمّل أحدث إصدار من هنا وثبّته يدوياً.'
+                : 'If automatic updates are unavailable in your current version, download and install the latest release here.'}
             </p>
 
             {/* CTA Button - Brutalist style */}
