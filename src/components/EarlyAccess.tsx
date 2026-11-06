@@ -72,8 +72,8 @@ export default function DirectAccess() {
 
             <p className="text-gray-300 text-sm mb-6 max-w-xl mx-auto leading-relaxed">
               {lang === 'ar'
-                ? 'نعمل حالياً على إصدار جديد لإعادة التحديث التلقائي. النسخة المتاحة للتحميل حالياً هي 0.4.6.'
-                : 'A new version is being prepared to restore automatic updates. The current download is version 0.4.6.'}
+                ? 'لمستخدمي الإصدارات السابقة: حمّل أحدث إصدار وثبّته يدوياً مرة واحدة لاستلام التحديثات القادمة تلقائياً.'
+                : 'Existing users: download and install the latest version manually once to receive future updates automatically.'}
             </p>
 
             {/* CTA Button - Brutalist style */}
